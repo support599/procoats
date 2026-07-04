@@ -172,6 +172,7 @@ p { margin: 0 0 16px; }
   font-size: 15px;
 }
 .main-nav a:hover { color: var(--color-primary); }
+.main-nav__phone { display: none; }
 
 .site-header__actions {
   display: flex;
@@ -845,6 +846,11 @@ input::placeholder { color: #8a8a86; }
     display: block;
     padding: 12px 0;
     border-bottom: 1px solid var(--color-border);
+  }
+  .site-header.is-open .main-nav__phone { display: block; }
+  .site-header.is-open .main-nav__phone a {
+    color: var(--color-primary);
+    font-weight: 700;
   }
 
   .hero__inner { grid-template-columns: 1fr; min-height: unset; padding-block: 48px; }
