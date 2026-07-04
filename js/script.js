@@ -160,19 +160,68 @@ document.addEventListener("DOMContentLoaded", () => {
       return off;
     };
 
+    // Reads the pixels of an already-scaled photo canvas so individual chips
+    // can be filled with a real sampled color instead of a clipped image
+    // fragment — clipping fragments of a busy photo into small polygons is
+    // what produced the blurry/muddy look, since the photo's own texture
+    // never lines up with our synthetic chip edges.
+    const imageDataCache = new Map();
+    const getImageData = (path, size) => {
+      if (!path) return null;
+      const key = path + ":" + size;
+      if (imageDataCache.has(key)) return imageDataCache.get(key);
+      const canvas = getScaledImage(path, size);
+      if (!canvas) return null;
+      const data = canvas.getContext("2d").getImageData(0, 0, size, size);
+      imageDataCache.set(key, data);
+      return data;
+    };
+
+    // A single raw pixel is unreliable — it might land on the dark seam
+    // between two stones in the source photo and paint a whole chip black.
+    // Averaging a small patch smooths those shadow/seam pixels out while
+    // still tracking real lighting/tone variation across the photo.
+    const sampleAverageColor = (imageData, rand, patchSize) => {
+      const w = imageData.width;
+      const h = imageData.height;
+      const half = Math.floor(patchSize / 2);
+      const cx = Math.floor(rand() * w);
+      const cy = Math.floor(rand() * h);
+      const d = imageData.data;
+      let rTotal = 0, gTotal = 0, bTotal = 0, count = 0;
+      for (let yy = -half; yy <= half; yy++) {
+        const y = cy + yy;
+        if (y < 0 || y >= h) continue;
+        for (let xx = -half; xx <= half; xx++) {
+          const x = cx + xx;
+          if (x < 0 || x >= w) continue;
+          const idx = (y * w + x) * 4;
+          rTotal += d[idx];
+          gTotal += d[idx + 1];
+          bTotal += d[idx + 2];
+          count++;
+        }
+      }
+      return { r: rTotal / count, g: gTotal / count, b: bTotal / count };
+    };
+
     // Renders a crumb-rubber granule texture weighted by each entry's mix
-    // percentage. Uses the real photo for a color when it has loaded, otherwise
-    // falls back to a shaded solid fill so the mixer still works with no assets.
+    // percentage. Each chip is a flat-filled polygon — solid color, crisp
+    // edges, a thin dark seam — the same way real poured rubber granules
+    // read in a photo. The fill color for a photo-backed entry is sampled
+    // straight from that color's real photo (so it still reflects the real
+    // material); entries with no photo yet fall back to a shaded solid hex.
     const drawMixedTexture = (canvas, entries) => {
       const ctx = canvas.getContext("2d");
       const w = canvas.width;
       const h = canvas.height;
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#211f1d";
+      ctx.fillStyle = "#1a1816";
       ctx.fillRect(0, 0, w, h);
 
       const totalWeight = entries.reduce((s, e) => s + e.weight, 0) || 1;
-      const cell = Math.max(5, Math.round(w / 40));
+      const cell = Math.max(8, Math.round(w / 22));
+      const patchSize = Math.max(14, Math.round(cell * 1.8));
       let seed = 42;
       const rand = () => {
         seed = (seed * 9301 + 49297) % 233280;
@@ -181,8 +230,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       for (let y = -cell; y < h + cell; y += cell) {
         for (let x = -cell; x < w + cell; x += cell) {
-          if (rand() < 0.12) continue;
-
           let r = rand() * totalWeight;
           let chosen = entries[entries.length - 1];
           for (const e of entries) {
@@ -192,30 +239,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const cx = x + rand() * cell;
           const cy = y + rand() * cell;
-          const rad = cell * (0.55 + rand() * 0.4);
+          const rad = cell * (0.62 + rand() * 0.35);
           const sides = 5 + Math.floor(rand() * 3);
           const rotation = rand() * Math.PI;
 
-          ctx.save();
+          let fill;
+          if (chosen.imageData) {
+            fill = shade(sampleAverageColor(chosen.imageData, rand, patchSize), (rand() - 0.5) * 0.08);
+          } else {
+            fill = shade(hexToRgb(chosen.hex), (rand() - 0.5) * 0.5);
+          }
+
           ctx.beginPath();
           for (let i = 0; i < sides; i++) {
             const angle = rotation + (i / sides) * Math.PI * 2;
-            const rr = rad * (0.75 + rand() * 0.35);
+            const rr = rad * (0.78 + rand() * 0.3);
             const px = cx + Math.cos(angle) * rr;
             const py = cy + Math.sin(angle) * rr;
             if (i === 0) ctx.moveTo(px, py);
             else ctx.lineTo(px, py);
           }
           ctx.closePath();
-          ctx.clip();
-
-          if (chosen.image) {
-            ctx.drawImage(chosen.image, 0, 0, w, h);
-          } else {
-            ctx.fillStyle = shade(hexToRgb(chosen.hex), (rand() - 0.5) * 0.5);
-            ctx.fill();
-          }
-          ctx.restore();
+          ctx.fillStyle = fill;
+          ctx.fill();
+          ctx.lineWidth = Math.max(0.75, cell * 0.05);
+          ctx.strokeStyle = "rgba(15,12,10,0.4)";
+          ctx.stroke();
         }
       }
     };
@@ -226,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const c = document.createElement("canvas");
         c.width = 120;
         c.height = 120;
-        drawMixedTexture(c, [{ hex: findColor(id).hex, weight: 100, image: null }]);
+        drawMixedTexture(c, [{ hex: findColor(id).hex, weight: 100, imageData: null }]);
         swatchCache.set(id, c.toDataURL());
       }
       return swatchCache.get(id);
@@ -310,22 +359,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderPreview() {
       const size = mixerCanvas.width;
+
+      // A single color needs no synthesized blend — show its real photo
+      // directly, unaltered, for maximum sharpness.
+      if (rows.length === 1) {
+        const color = findColor(rows[0].color);
+        const image = getScaledImage(color.mixerImage || color.image, size);
+        if (image) {
+          const ctx = mixerCanvas.getContext("2d");
+          ctx.clearRect(0, 0, size, size);
+          ctx.drawImage(image, 0, 0);
+          return;
+        }
+      }
+
       const entries = rows.map((r) => {
         const color = findColor(r.color);
         return {
           hex: color.hex,
           weight: r.weight,
-          image: getScaledImage(color.mixerImage || color.image, size),
+          imageData: getImageData(color.mixerImage || color.image, size),
         };
       });
-
-      if (entries.length === 1 && entries[0].image) {
-        const ctx = mixerCanvas.getContext("2d");
-        ctx.clearRect(0, 0, size, size);
-        ctx.drawImage(entries[0].image, 0, 0);
-      } else {
-        drawMixedTexture(mixerCanvas, entries);
-      }
+      drawMixedTexture(mixerCanvas, entries);
     }
 
     function renderRows() {
