@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="90" viewBox="0 0 160 90">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#2a2a2a"/><stop offset="1" stop-color="#111111"/></linearGradient></defs>
+<rect width="160" height="90" fill="url(#g)"/>
+<g fill="#ffffff" fill-opacity="0.35" font-family="Arial, sans-serif" text-anchor="end">
+<text x="142" y="72" font-size="8.4" font-weight="700">Vid 4</text>
+</g>
+</svg>

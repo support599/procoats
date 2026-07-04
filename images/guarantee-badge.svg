@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+<circle cx="90" cy="90" r="86" fill="#d4af37" stroke="#8a6d1f" stroke-width="3"/>
+<circle cx="90" cy="90" r="70" fill="none" stroke="#8a6d1f" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="90" y="80" font-family="Arial, sans-serif" font-size="26" font-weight="800" fill="#3a2f10" text-anchor="middle">G.E.M.</text>
+<text x="90" y="102" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#3a2f10" text-anchor="middle">LIFETIME</text>
+<text x="90" y="116" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#3a2f10" text-anchor="middle">GUARANTEE</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#c9b58a"/><stop offset="1" stop-color="#8a7a56"/></linearGradient></defs>
+<rect width="1600" height="700" fill="url(#g)"/>
+<g fill="#ffffff" fill-opacity="0.35" font-family="Arial, sans-serif" text-anchor="end">
+<text x="1582" y="682" font-size="13.2" font-weight="700">Walkways Background Photo</text>
+</g>
+</svg>

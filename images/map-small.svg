@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="260" viewBox="0 0 500 260">
+<rect width="500" height="260" fill="#e5e3df"/>
+<g stroke="#c9c6bf" stroke-width="1">
+<line x1="0" y1="52.0" x2="500" y2="52.0"/><line x1="0" y1="104.0" x2="500" y2="104.0"/>
+<line x1="0" y1="156.0" x2="500" y2="156.0"/><line x1="0" y1="208.0" x2="500" y2="208.0"/>
+<line x1="100.0" y1="0" x2="100.0" y2="260"/><line x1="200.0" y1="0" x2="200.0" y2="260"/>
+<line x1="300.0" y1="0" x2="300.0" y2="260"/><line x1="400.0" y1="0" x2="400.0" y2="260"/>
+</g>
+<circle cx="175.0" cy="104.0" r="5" fill="#4285F4"/>
+<circle cx="275.0" cy="143.0" r="5" fill="#4285F4"/>
+<circle cx="325.0" cy="78.0" r="5" fill="#4285F4"/>
+<circle cx="225.0" cy="169.0" r="5" fill="#4285F4"/>
+<text x="250.0" y="130.0" font-family="Arial, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="middle">Map placeholder</text>
+</svg>
