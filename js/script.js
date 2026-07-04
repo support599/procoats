@@ -70,30 +70,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const optionsPanel = document.getElementById("color-options-panel");
 
   if (mixerRowsEl && mixerCanvas && gridEl) {
-    // `image` points at the real EPDM granule photo for that color. Until a
-    // given file exists, that swatch/preview falls back to a procedurally
-    // generated granule texture below.
+    // `image` is the photo shown in the "EPDM Colors Options" reference grid.
+    // `mixerImage` is a separate, dedicated photo used inside the mixer itself
+    // (row swatches, row dropdown, and the blended preview) — falls back to
+    // `image` when a color has no dedicated mixer photo yet. Either falls
+    // back to a procedurally generated granule texture if its file 404s.
     const EPDM_COLORS = [
-      { id: "056", name: "056 Eggshell", hex: "#ddc9a1", image: "images/epdm/056-eggshell.png" },
-      { id: "062", name: "062 Standard Red", hex: "#a8432c", image: "images/epdm/062-standard-red.png" },
-      { id: "064", name: "064 Standard Blue", hex: "#1f6fb0", image: "images/epdm/064-standard-blue.png" },
-      { id: "067", name: "067 Standard Green", hex: "#7c8c56", image: "images/epdm/067-standard-green.png" },
-      { id: "054", name: "054 Dark Blue", hex: "#1b3a8a", image: "images/epdm/054-dark-blue.png" },
-      { id: "084", name: "084 Bright Blue", hex: "#3aa8dc", image: "images/epdm/084-bright-blue.png" },
-      { id: "044", name: "044 Lilac", hex: "#8d7cb8", image: "images/epdm/044-lilac.png" },
-      { id: "083", name: "083 Bright Orange", hex: "#dd7a2e", image: "images/epdm/083-bright-orange.png" },
-      { id: "082", name: "082 Bright Red", hex: "#c65141", image: "images/epdm/082-bright-red.webp" },
-      { id: "069", name: "069 Yellow", hex: "#c99a3a", image: "images/epdm/069-yellow.png" },
+      { id: "056", name: "056 Eggshell", hex: "#ddc9a1", image: "images/epdm/056-eggshell.png", mixerImage: "images/epdm/color-mixer-100-056-eggshell.png" },
+      { id: "062", name: "062 Standard Red", hex: "#a8432c", image: "images/epdm/062-standard-red.png", mixerImage: "images/epdm/color-mixer-100-062-standard-red.png" },
+      { id: "064", name: "064 Standard Blue", hex: "#1f6fb0", image: "images/epdm/064-standard-blue.png", mixerImage: "images/epdm/color-mixer-100-064-standard-blue.png" },
+      { id: "067", name: "067 Standard Green", hex: "#7c8c56", image: "images/epdm/067-standard-green.png", mixerImage: "images/epdm/color-mixer-100-067-standard-green.png" },
+      { id: "054", name: "054 Dark Blue", hex: "#1b3a8a", image: "images/epdm/054-dark-blue.png", mixerImage: "images/epdm/color-mixer-100-054-dark-blue.png" },
+      { id: "084", name: "084 Bright Blue", hex: "#3aa8dc", image: "images/epdm/084-bright-blue.png", mixerImage: "images/epdm/color-mixer-100-084-bright-blue.png" },
+      { id: "044", name: "044 Lilac", hex: "#8d7cb8", image: "images/epdm/044-lilac.png", mixerImage: "images/epdm/color-mixer-100-044-lilac.png" },
+      { id: "083", name: "083 Bright Orange", hex: "#dd7a2e", image: "images/epdm/083-bright-orange.png", mixerImage: "images/epdm/color-mixer-100-083-bright-orange.png" },
+      { id: "082", name: "082 Bright Red", hex: "#c65141", image: "images/epdm/082-bright-red.webp", mixerImage: "images/epdm/color-mixer-100-082-bright-red.png" },
+      { id: "069", name: "069 Yellow", hex: "#c99a3a", image: "images/epdm/069-yellow.png", mixerImage: "images/epdm/color-mixer-100-069-yellow.png" },
       { id: "089", name: "089 Bright Yellow", hex: "#dcb52e", image: "images/epdm/089-bright-yellow.png" },
-      { id: "087", name: "087 Bright Green", hex: "#6ea85a", image: "images/epdm/087-bright-green.png" },
-      { id: "047", name: "047 Dark Green", hex: "#163d2f", image: "images/epdm/047-dark-green.png" },
-      { id: "060", name: "060 White", hex: "#e8e1d2", image: "images/epdm/060-white.png" },
-      { id: "046", name: "046 Brown", hex: "#4a3226", image: "images/epdm/046-brown.png" },
-      { id: "076", name: "076 Beige Brown", hex: "#8a5a3d", image: "images/epdm/076-beige-brown.png" },
-      { id: "065", name: "065 Gray", hex: "#b9b9b3", image: "images/epdm/065-gray.png" },
-      { id: "055", name: "055 Mid Gray", hex: "#6f6f68", image: "images/epdm/055-mid-gray.png" },
-      { id: "045", name: "045 Dark Gray", hex: "#2e2b2c", image: "images/epdm/045-dark-gray.png" },
-      { id: "black", name: "Black", hex: "#161414", image: "images/epdm/black.png" },
+      { id: "087", name: "087 Bright Green", hex: "#6ea85a", image: "images/epdm/087-bright-green.png", mixerImage: "images/epdm/color-mixer-100-087-bright-green.png" },
+      { id: "047", name: "047 Dark Green", hex: "#163d2f", image: "images/epdm/047-dark-green.png", mixerImage: "images/epdm/color-mixer-100-047-dark-green.png" },
+      { id: "060", name: "060 White", hex: "#e8e1d2", image: "images/epdm/060-white.png", mixerImage: "images/epdm/color-mixer-100-060-white.png" },
+      { id: "046", name: "046 Brown", hex: "#4a3226", image: "images/epdm/046-brown.png", mixerImage: "images/epdm/color-mixer-100-046-brown.png" },
+      { id: "076", name: "076 Beige Brown", hex: "#8a5a3d", image: "images/epdm/076-beige-brown.png", mixerImage: "images/epdm/color-mixer-100-076-beige-brown.png" },
+      { id: "065", name: "065 Gray", hex: "#b9b9b3", image: "images/epdm/065-gray.png", mixerImage: "images/epdm/color-mixer-100-065-gray.png" },
+      { id: "055", name: "055 Mid Gray", hex: "#6f6f68", image: "images/epdm/055-mid-gray.png", mixerImage: "images/epdm/color-mixer-100-055-mid-gray.png" },
+      { id: "045", name: "045 Dark Gray", hex: "#2e2b2c", image: "images/epdm/045-dark-gray.png", mixerImage: "images/epdm/color-mixer-100-045-dark-gray.png" },
+      { id: "black", name: "Black", hex: "#161414", image: "images/epdm/black.png", mixerImage: "images/epdm/color-mixer-100-black.png" },
     ];
 
     const findColor = (id) => EPDM_COLORS.find((c) => c.id === id) || EPDM_COLORS[0];
@@ -112,15 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return `rgb(${r}, ${g}, ${b})`;
     };
 
-    // Real photo loading, keyed by color id. Falls back silently (procedural
-    // texture) until images/epdm/<file>.jpg actually exists on disk.
+    // Real photo loading, keyed by file path (each color can have up to two
+    // distinct photos — grid vs. mixer — so path is the only stable key).
+    // Falls back silently (procedural texture) until a given path 404s.
     const rawImages = new Map();
     const scaledImageCache = new Map();
 
-    const ensureImageLoaded = (id) => {
-      if (rawImages.has(id)) return;
+    const ensureImageLoaded = (path) => {
+      if (!path || rawImages.has(path)) return;
       const entry = { status: "loading", img: null };
-      rawImages.set(id, entry);
+      rawImages.set(path, entry);
       const img = new Image();
       img.onload = () => {
         entry.status = "loaded";
@@ -133,15 +136,16 @@ document.addEventListener("DOMContentLoaded", () => {
       img.onerror = () => {
         entry.status = "error";
       };
-      img.src = findColor(id).image;
+      img.src = path;
     };
 
     // Crops/scales a loaded photo to fill a size x size square (object-fit: cover),
     // cached so repeated granule draws just blit an already-sized canvas.
-    const getScaledImage = (id, size) => {
-      const key = id + ":" + size;
+    const getScaledImage = (path, size) => {
+      if (!path) return null;
+      const key = path + ":" + size;
       if (scaledImageCache.has(key)) return scaledImageCache.get(key);
-      const raw = rawImages.get(id);
+      const raw = rawImages.get(path);
       if (!raw || raw.status !== "loaded") return null;
       const img = raw.img;
       const off = document.createElement("canvas");
@@ -217,9 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const swatchCache = new Map();
-    const swatchUrl = (id) => {
-      const raw = rawImages.get(id);
-      if (raw && raw.status === "loaded") return findColor(id).image;
+    const proceduralSwatch = (id) => {
       if (!swatchCache.has(id)) {
         const c = document.createElement("canvas");
         c.width = 120;
@@ -228,6 +230,24 @@ document.addEventListener("DOMContentLoaded", () => {
         swatchCache.set(id, c.toDataURL());
       }
       return swatchCache.get(id);
+    };
+
+    // Used by the "EPDM Colors Options" reference grid — the original photos.
+    const gridSwatchUrl = (id) => {
+      const path = findColor(id).image;
+      const raw = rawImages.get(path);
+      if (raw && raw.status === "loaded") return path;
+      return proceduralSwatch(id);
+    };
+
+    // Used inside the mixer itself (row swatch, row dropdown, preview) — the
+    // dedicated mixer photo when one exists, otherwise the grid photo.
+    const mixerSwatchUrl = (id) => {
+      const color = findColor(id);
+      const path = color.mixerImage || color.image;
+      const raw = rawImages.get(path);
+      if (raw && raw.status === "loaded") return path;
+      return proceduralSwatch(id);
     };
 
     let rows = [{ color: EPDM_COLORS[0].id, weight: 100 }];
@@ -290,11 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderPreview() {
       const size = mixerCanvas.width;
-      const entries = rows.map((r) => ({
-        hex: findColor(r.color).hex,
-        weight: r.weight,
-        image: getScaledImage(r.color, size),
-      }));
+      const entries = rows.map((r) => {
+        const color = findColor(r.color);
+        return {
+          hex: color.hex,
+          weight: r.weight,
+          image: getScaledImage(color.mixerImage || color.image, size),
+        };
+      });
 
       if (entries.length === 1 && entries[0].image) {
         const ctx = mixerCanvas.getContext("2d");
@@ -323,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
         select.type = "button";
         select.className = "mixer-row__select";
         select.innerHTML =
-          '<span class="mixer-row__swatch" style="background-image:url(\'' + swatchUrl(row.color) + '\')"></span>' +
+          '<span class="mixer-row__swatch" style="background-image:url(\'' + mixerSwatchUrl(row.color) + '\')"></span>' +
           '<span class="mixer-row__name">' + color.name + "</span>" +
           '<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>';
         select.addEventListener("click", (e) => {
@@ -371,13 +394,12 @@ document.addEventListener("DOMContentLoaded", () => {
             item.type = "button";
             item.className = "mixer-dropdown__item" + (c.id === row.color ? " is-active" : "");
             item.innerHTML =
-              '<span class="mixer-dropdown__swatch" style="background-image:url(\'' + swatchUrl(c.id) + '\')"></span>' + c.name;
+              '<span class="mixer-dropdown__swatch" style="background-image:url(\'' + mixerSwatchUrl(c.id) + '\')"></span>' + c.name;
             item.addEventListener("click", (e) => {
               e.stopPropagation();
               rows[i].color = c.id;
               activeRow = i;
               openRow = null;
-              ensureImageLoaded(c.id);
               renderRows();
               renderPreview();
               renderGrid();
@@ -414,11 +436,10 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.type = "button";
         btn.className = "color-swatch" + (selectedIds.has(color.id) ? " is-selected" : "");
         btn.innerHTML =
-          '<span class="color-swatch__img" style="background-image:url(\'' + swatchUrl(color.id) + '\')"></span>' +
+          '<span class="color-swatch__img" style="background-image:url(\'' + gridSwatchUrl(color.id) + '\')"></span>' +
           '<span class="color-swatch__label">' + color.name + "</span>";
         btn.addEventListener("click", () => {
           rows[activeRow].color = color.id;
-          ensureImageLoaded(color.id);
           renderRows();
           renderPreview();
           renderGrid();
@@ -466,7 +487,6 @@ document.addEventListener("DOMContentLoaded", () => {
       normalizeWeights();
       activeRow = rows.length - 1;
       openRow = null;
-      ensureImageLoaded(next.id);
       renderRows();
       renderPreview();
       renderGrid();
@@ -523,7 +543,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    EPDM_COLORS.forEach((c) => ensureImageLoaded(c.id));
+    EPDM_COLORS.forEach((c) => {
+      ensureImageLoaded(c.image);
+      ensureImageLoaded(c.mixerImage);
+    });
     renderRows();
     renderPreview();
     renderGrid();
