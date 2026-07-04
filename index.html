@@ -174,6 +174,55 @@
   </div>
 </section>
 
+<!-- EPDM Color Mixer -->
+<section class="section mixer-section" id="color-mixer">
+  <div class="container mixer-intro">
+    <p class="eyebrow">EPDM POURED RUBBER</p>
+    <h2 class="section-title">Custom Color Mix Simulator</h2>
+    <p class="section-rule section-rule--center"><span></span></p>
+    <p class="mixer-intro__copy">Unsure about your color options? We can help. Our custom color mixer allows you to pre-mix color options to find your perfect EPDM poured rubber surface aesthetic. Once you have your color mix, request a sample to ensure the color is exactly what you want.</p>
+  </div>
+
+  <div class="container">
+    <p class="mixer-note">
+      <strong>Note that the colors in this mixer are representative of our EPDM color options. Actual samples should be requested to ensure your selection meets expectations.</strong>
+      <strong>*Indicates colors may incur longer lead times. Please consult with a representative for availability.</strong>
+    </p>
+
+    <div class="mixer-widget">
+      <div class="mixer-controls">
+        <div class="mixer-rows" id="mixer-rows"></div>
+        <button type="button" class="btn btn--primary mixer-add-btn" id="mixer-add-color">
+          <i class="fa-solid fa-plus" aria-hidden="true"></i> Add a color
+        </button>
+      </div>
+
+      <div class="mixer-preview">
+        <div class="mixer-preview__frame">
+          <canvas id="mixer-canvas" width="340" height="340" aria-label="Preview of your mixed EPDM rubber surface color"></canvas>
+        </div>
+        <div class="mixer-preview__actions">
+          <button type="button" class="btn btn--secondary" id="mixer-print"><i class="fa-solid fa-print" aria-hidden="true"></i> Print</button>
+          <button type="button" class="btn btn--outline-dark" id="mixer-download"><i class="fa-solid fa-download" aria-hidden="true"></i> Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container color-options">
+    <p class="eyebrow eyebrow--center">COLOR OPTIONS</p>
+    <p class="color-options__intro">We recognize how crucial visual appeal is when creating a new space. For that reason, we provide a broad selection of color options beyond traditional black. Our EPDM colored rubber granules make it possible to design eye-catching surfaces that elevate the overall appearance of your environment. Whether you&rsquo;re looking for a bold red or a soothing blue, we offer a variety of shades to bring your design concept to life.</p>
+
+    <button type="button" class="color-options__toggle" id="color-options-toggle" aria-expanded="true" aria-controls="color-options-panel">
+      <span>EPDM Colors Options</span>
+      <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+    </button>
+    <div class="color-options__panel" id="color-options-panel">
+      <div class="color-options__grid" id="color-options-grid"></div>
+    </div>
+  </div>
+</section>
+
 <!-- Differentiators -->
 <section class="section diff-section">
   <div class="container">
