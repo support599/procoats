@@ -59,6 +59,54 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const galleryTrack = document.getElementById("gallery-track");
+  const galleryPrev = document.getElementById("gallery-prev");
+  const galleryNext = document.getElementById("gallery-next");
+  const galleryDots = document.getElementById("gallery-dots");
+
+  if (galleryTrack && galleryPrev && galleryNext && galleryDots) {
+    const buildDots = () => {
+      galleryDots.innerHTML = "";
+      const itemWidth = galleryTrack.children[0].getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(galleryTrack).gap) || 0;
+      const perPage = Math.max(1, Math.round((galleryTrack.clientWidth + gap) / (itemWidth + gap)));
+      const pageCount = Math.ceil(galleryTrack.children.length / perPage);
+
+      for (let i = 0; i < pageCount; i++) {
+        const dot = document.createElement("button");
+        dot.setAttribute("aria-label", `Go to gallery page ${i + 1}`);
+        if (i === 0) dot.classList.add("is-active");
+        dot.addEventListener("click", () => {
+          galleryTrack.scrollTo({ left: i * galleryTrack.clientWidth, behavior: "smooth" });
+        });
+        galleryDots.appendChild(dot);
+      }
+    };
+
+    buildDots();
+
+    const updateActiveDot = () => {
+      const dots = Array.from(galleryDots.children);
+      const page = Math.round(galleryTrack.scrollLeft / galleryTrack.clientWidth);
+      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === page));
+    };
+
+    galleryPrev.addEventListener("click", () => {
+      galleryTrack.scrollBy({ left: -galleryTrack.clientWidth, behavior: "smooth" });
+    });
+    galleryNext.addEventListener("click", () => {
+      galleryTrack.scrollBy({ left: galleryTrack.clientWidth, behavior: "smooth" });
+    });
+    galleryTrack.addEventListener("scroll", () => {
+      window.clearTimeout(galleryTrack._scrollTimeout);
+      galleryTrack._scrollTimeout = window.setTimeout(updateActiveDot, 100);
+    });
+    window.addEventListener("resize", () => {
+      window.clearTimeout(galleryTrack._resizeTimeout);
+      galleryTrack._resizeTimeout = window.setTimeout(buildDots, 150);
+    });
+  }
+
   // EPDM Color Mixer
   const mixerRowsEl = document.getElementById("mixer-rows");
   const mixerCanvas = document.getElementById("mixer-canvas");
@@ -166,15 +214,28 @@ document.addEventListener("DOMContentLoaded", () => {
     // what produced the blurry/muddy look, since the photo's own texture
     // never lines up with our synthetic chip edges.
     const imageDataCache = new Map();
+    // Reading pixels back off a canvas throws a SecurityError if the page was
+    // opened directly as a file:// URL (each local file is treated as its own
+    // origin, so the canvas is considered "tainted"). That only affects local
+    // double-click previews — real http(s) hosting never taints same-origin
+    // images — but it must not crash the whole preview when it happens, so
+    // once we hit it we stop trying and every entry falls back to a flat
+    // color fill instead of a stuck/blank canvas.
+    let canvasReadBlocked = false;
     const getImageData = (path, size) => {
-      if (!path) return null;
+      if (!path || canvasReadBlocked) return null;
       const key = path + ":" + size;
       if (imageDataCache.has(key)) return imageDataCache.get(key);
       const canvas = getScaledImage(path, size);
       if (!canvas) return null;
-      const data = canvas.getContext("2d").getImageData(0, 0, size, size);
-      imageDataCache.set(key, data);
-      return data;
+      try {
+        const data = canvas.getContext("2d").getImageData(0, 0, size, size);
+        imageDataCache.set(key, data);
+        return data;
+      } catch (err) {
+        canvasReadBlocked = true;
+        return null;
+      }
     };
 
     // A single raw pixel is unreliable — it might land on the dark seam
@@ -247,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (chosen.imageData) {
             fill = shade(sampleAverageColor(chosen.imageData, rand, patchSize), (rand() - 0.5) * 0.08);
           } else {
-            fill = shade(hexToRgb(chosen.hex), (rand() - 0.5) * 0.5);
+            fill = shade(hexToRgb(chosen.hex), (rand() - 0.5) * 0.16);
           }
 
           ctx.beginPath();
@@ -548,9 +609,22 @@ document.addEventListener("DOMContentLoaded", () => {
       renderGrid();
     });
 
+    // Reading the canvas back out (toDataURL) throws under file:// for the
+    // same tainting reason as getImageData above — never an issue once the
+    // page is actually hosted over http(s).
+    const readCanvasDataUrl = () => {
+      try {
+        return mixerCanvas.toDataURL("image/png");
+      } catch (err) {
+        alert("Print and download aren't available while previewing this file locally — they'll work once the page is live on the website.");
+        return null;
+      }
+    };
+
     if (printBtn) {
       printBtn.addEventListener("click", () => {
-        const dataUrl = mixerCanvas.toDataURL("image/png");
+        const dataUrl = readCanvasDataUrl();
+        if (!dataUrl) return;
         const names = rows
           .map((r) => findColor(r.color).name + (rows.length > 1 ? " (" + Math.round(r.weight) + "%)" : ""))
           .join(" + ");
@@ -571,7 +645,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (downloadBtn) {
       downloadBtn.addEventListener("click", () => {
-        const dataUrl = mixerCanvas.toDataURL("image/png");
+        const dataUrl = readCanvasDataUrl();
+        if (!dataUrl) return;
         const names = rows
           .map((r) => findColor(r.color).name.replace(/\s+/g, "-") + (rows.length > 1 ? "-" + Math.round(r.weight) : ""))
           .join("_");
@@ -584,19 +659,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    // Collapsed by default (the panel and toggle already start in that state
+    // in the HTML) on every screen size — the visitor opens it deliberately.
     if (optionsToggle && optionsPanel) {
       optionsToggle.addEventListener("click", () => {
         const expanded = optionsToggle.getAttribute("aria-expanded") === "true";
         optionsToggle.setAttribute("aria-expanded", String(!expanded));
         optionsPanel.classList.toggle("is-collapsed", expanded);
       });
-
-      // Collapsed by default on mobile so the color grid doesn't push the
-      // rest of the page down before the visitor has even used the mixer.
-      if (window.matchMedia("(max-width: 640px)").matches) {
-        optionsToggle.setAttribute("aria-expanded", "false");
-        optionsPanel.classList.add("is-collapsed");
-      }
     }
 
     EPDM_COLORS.forEach((c) => {
@@ -606,5 +676,94 @@ document.addEventListener("DOMContentLoaded", () => {
     renderRows();
     renderPreview();
     renderGrid();
+  }
+
+  // Gallery page lightbox
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxClose = document.getElementById("lightbox-close");
+  const lightboxPrev = document.getElementById("lightbox-prev");
+  const lightboxNext = document.getElementById("lightbox-next");
+
+  if (lightbox && lightboxImg) {
+    const photos = Array.from(document.querySelectorAll(".photo-item"));
+    let currentIndex = 0;
+
+    const openLightbox = (index) => {
+      currentIndex = (index + photos.length) % photos.length;
+      const item = photos[currentIndex];
+      lightboxImg.src = item.dataset.full;
+      lightboxImg.alt = item.querySelector("img").alt;
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+    };
+
+    photos.forEach((item, index) => {
+      item.addEventListener("click", () => openLightbox(index));
+    });
+
+    if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+    if (lightboxPrev) lightboxPrev.addEventListener("click", () => openLightbox(currentIndex - 1));
+    if (lightboxNext) lightboxNext.addEventListener("click", () => openLightbox(currentIndex + 1));
+
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!lightbox.classList.contains("is-open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") openLightbox(currentIndex - 1);
+      if (e.key === "ArrowRight") openLightbox(currentIndex + 1);
+    });
+  }
+
+  // Before/After featured carousel
+  const featureCarousel = document.getElementById("feature-carousel");
+  const featureTrack = document.getElementById("feature-track");
+  const featurePrev = document.getElementById("feature-prev");
+  const featureNext = document.getElementById("feature-next");
+
+  if (featureCarousel && featureTrack) {
+    const slides = Array.from(featureTrack.children);
+    let activeIndex = 0;
+
+    const render = () => {
+      slides.forEach((slide, i) => {
+        const distance = Math.abs(i - activeIndex);
+        slide.classList.remove("is-active", "is-near", "is-far", "is-hidden");
+        if (distance === 0) slide.classList.add("is-active");
+        else if (distance === 1) slide.classList.add("is-near");
+        else if (distance === 2) slide.classList.add("is-far");
+        else slide.classList.add("is-hidden");
+      });
+
+      const containerWidth = featureCarousel.clientWidth;
+      const gap = parseFloat(getComputedStyle(featureTrack).gap) || 0;
+      let offset = 0;
+      for (let i = 0; i < activeIndex; i++) {
+        offset += slides[i].offsetWidth + gap;
+      }
+      offset += slides[activeIndex].offsetWidth / 2;
+      const translateX = containerWidth / 2 - offset;
+      featureTrack.style.transform = `translateX(${translateX}px)`;
+    };
+
+    if (featurePrev) featurePrev.addEventListener("click", () => {
+      activeIndex = Math.max(0, activeIndex - 1);
+      render();
+    });
+    if (featureNext) featureNext.addEventListener("click", () => {
+      activeIndex = Math.min(slides.length - 1, activeIndex + 1);
+      render();
+    });
+
+    window.addEventListener("resize", render);
+    render();
   }
 });

@@ -10,13 +10,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="home-page">
 
 <!-- Top promo bar -->
 <div class="topbar">
   <div class="topbar__track">
-    <span>Start your project for as low as $49 a month with financing &ndash; Call to learn more *Subject to approval</span>
-    <span>Start your project for as low as $49 a month with financing &ndash; Call to learn more *Subject to approval</span>
+    <span>Proudly serving East Texas, Shreveport, Dallas, Waco, College Station &amp; Texarkana &nbsp;&middot;&nbsp; 0% Interest for 15 Months <small>*Subject to approval</small></span>
+    <span>Proudly serving East Texas, Shreveport, Dallas, Waco, College Station &amp; Texarkana &nbsp;&middot;&nbsp; 0% Interest for 15 Months <small>*Subject to approval</small></span>
   </div>
 </div>
 
@@ -31,10 +31,18 @@
       <ul>
         <li class="main-nav__phone"><a href="tel:9034808443"><span aria-hidden="true">&#9742;</span> 903-480-8443</a></li>
         <li><a href="#">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Resources</a></li>
+        <li class="main-nav__dropdown">
+          <a href="#services">Services <span class="main-nav__caret" aria-hidden="true">&#9662;</span></a>
+          <ul class="main-nav__submenu">
+            <li><a href="#">Resorts/Hotels</a></li>
+            <li><a href="#">Pool Decks</a></li>
+            <li><a href="#">Patios</a></li>
+          </ul>
+        </li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="financing.html">Financing</a></li>
+        <li><a href="warranty.html">Warranty</a></li>
+        <li><a href="#">FAQ</a></li>
         <li><a href="#">Locations</a></li>
       </ul>
     </nav>
@@ -43,7 +51,7 @@
       <a href="tel:9034808443" class="btn btn--pill btn--outline-dark phone-btn">
         <span class="phone-icon" aria-hidden="true">&#9742;</span> 903-480-8443
       </a>
-      <a href="#contact" class="btn btn--pill btn--primary">Schedule Appointment</a>
+      <a href="#contact" class="btn btn--pill btn--primary">Request Service</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -58,12 +66,12 @@
   <div class="hero__vignette"></div>
   <div class="container hero__inner">
     <div class="hero__copy">
-      <p class="eyebrow eyebrow--light eyebrow--rated"><span class="stars stars--sm" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Trusted All Over East Texas</p>
-      <h1>The Ultimate Floor Coating Experience: Pool Decks, Patios, Walkways and Driveways</h1>
+      <p class="eyebrow eyebrow--light eyebrow--rated"><span class="stars stars--sm" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Trusted All Over Texas and Louisiana</p>
+      <h1 class="hero__headline"><span>The Ultimate Pool Coating Experience:</span><span class="hero__headline-accent">Pool Decks, Patios, Walkways, and Driveways</span></h1>
     </div>
 
     <form class="hero__form" id="hero-form">
-      <h2>Free Custom Design ($500 Value) &ndash; Order by July 15th!</h2>
+      <h2>Free Custom Design <span class="hero__form-accent">($500 Value)</span> &ndash; Order by July 15th!</h2>
       <div class="form-row">
         <input type="text" placeholder="First Name" required>
         <input type="text" placeholder="Last Name" required>
@@ -86,12 +94,12 @@
 <!-- Credibility bar -->
 <section class="credibility-bar">
   <div class="container credibility-bar__grid">
-    <img src="images/credential-bbb.svg" alt="BBB A+ Rated">
-    <img src="images/credential-licensed.svg" alt="Licensed and Insured">
-    <img src="images/credential-google.svg" alt="Google Guaranteed">
-    <img src="images/credential-rated.svg" alt="5-Star Rated">
-    <img src="images/credential-warranty.svg" alt="10-Year Warranty">
-    <img src="images/credential-epa.svg" alt="EPA Certified">
+    <img src="images/credential-bbb.png" alt="BBB A+ Rated">
+    <img src="images/credential-licensed.png" alt="Licensed and Insured">
+    <img src="images/credential-google.png" alt="Google Guaranteed">
+    <img src="images/credential-rated.png" alt="5-Star Rated">
+    <img src="images/credential-warranty.png" alt="10-Year Warranty">
+    <img src="images/credential-epa.png" alt="EPA Certified">
   </div>
 </section>
 
@@ -101,22 +109,22 @@
     <div class="intro-copy">
       <p class="eyebrow"><span class="eyebrow-dash"></span></p>
       <h2>The Best Outdoor Resurfacing in Texas</h2>
-      <p>Recreate the stunning look of stone at a fraction of the cost with <a href="#">Gem-Scape&trade;</a>, our proprietary concrete overlay material blend that will make your visions a reality. Our application process allows us to recreate the look and feel of stone, colored or stained.</p>
-      <p>Gem-Scape&trade; is applied and cut by hand, allowing its pattern to be customized in nearly any shape and size. It can be cut to look like tile, brick, travertine, herringbone pavers, or natural flagstone, giving you countless options to choose from.</p>
-      <a href="#" class="btn btn--secondary">Read More</a>
+      <p>Transform your pool deck, patio, or play area with <a href="#color-mixer">ProFlex&trade;</a>, our proprietary poured-in-place rubber surfacing that's soft underfoot, slip-resistant, and built to handle the Texas heat. Every project is hand-poured and hand-troweled on site to fit your exact space.</p>
+      <p>ProFlex&trade; comes in dozens of custom color blends &mdash; mix your own combination in our Color Mix Simulator below and request a real sample before you commit.</p>
+      <a href="#color-mixer" class="btn btn--secondary">Read More</a>
     </div>
     <div class="intro-media">
-      <img src="images/resurfacing-video.svg" alt="Gem-Scape transformation video preview">
+      <img src="images/resurfacing-video.svg" alt="ProFlex rubber surfacing transformation video preview">
       <button class="play-btn" aria-label="Play video">&#9658;</button>
     </div>
   </div>
 
-  <div class="container guarantee-strip">
-    <img src="images/guarantee-badge.svg" alt="G.E.M. Lifetime Guarantee badge" class="guarantee-strip__badge">
+  <div class="container guarantee-strip" id="warranty">
+    <img src="images/guarantee-badge.svg" alt="ProFlex Lifetime Guarantee badge" class="guarantee-strip__badge">
     <div class="guarantee-strip__copy">
-      <h3>Gem-Scape&trade;. Guaranteed for Life.</h3>
-      <p>At Pro Coat Concrete Coatings, we stand behind our craftsmanship, our products, and our people. Our guarantees are designed to give you complete confidence in your investment &middot; today and for years to come.</p>
-      <a href="#" class="btn btn--secondary">Learn More</a>
+      <h3>ProFlex&trade;. Guaranteed for Life.</h3>
+      <p>At Pro Coat Concrete Coatings, we stand behind our craftsmanship, our products, and our people. Your ProFlex&trade; surface is covered for the life of your home &mdash; full labor and materials coverage for the first 7 years, then a labor-only warranty after that.</p>
+      <a href="warranty.html" class="btn btn--secondary">Learn More</a>
     </div>
   </div>
 
@@ -125,36 +133,54 @@
     <p class="section-rule"><span></span></p>
     <div class="services-grid">
       <article class="service-card">
-        <img src="images/service-gemscape.svg" alt="Gem-Scape overlay project">
-        <h3>Gem-Scape&trade;</h3>
-        <p>Our proprietary material blend allows us to recreate the look and feel of stone and customize its pattern in any shape and size.</p>
+        <img src="images/proflex.jpg" alt="ProFlex poured rubber pool deck surfacing project">
+        <h3>ProFlex&trade;</h3>
+        <p>Our proprietary poured-in-place rubber surfacing is soft underfoot, slip-resistant, and available in dozens of custom color blends &mdash; see it come to life in our <a href="#color-mixer">Color Mix Simulator</a> above.</p>
+        <a href="#color-mixer" class="btn btn--secondary">Learn More</a>
+      </article>
+      <article class="service-card">
+        <img src="images/prostone.jpg" alt="ProStone aggregate stone pool deck surfacing">
+        <h3>ProStone&trade;</h3>
+        <p>Our resin-bound aggregate stone surfacing delivers a natural, decorative stone look with a durable, slip-resistant finish&mdash;installed directly over your existing surface with no messy demolition.</p>
         <a href="#" class="btn btn--secondary">Learn More</a>
       </article>
       <article class="service-card">
-        <img src="images/service-capstone.svg" alt="Cap-Stone coping and deck overlay">
-        <h3>Cap-Stone&trade;</h3>
-        <p>Award-winning coping and deck overlay system installed directly over your existing surface&mdash;no messy demolition and no massive change orders.</p>
-        <a href="#" class="btn btn--secondary">Learn More</a>
-      </article>
-      <article class="service-card">
-        <img src="images/service-concrete.svg" alt="Concrete driveway installation">
-        <h3>Concrete</h3>
-        <p>We offer concrete installations and <a href="#">overlays</a> that transform your driveway, walkway, or <a href="#">pool deck</a> with long-lasting quality.</p>
-        <a href="#" class="btn btn--secondary">Learn More</a>
-      </article>
-      <article class="service-card">
-        <img src="images/service-pavers.svg" alt="Paver walkway installation">
-        <h3>Pavers</h3>
-        <p>Create beautiful pathways and <a href="#">driveways</a> with our concrete, travertine and porcelain pavers.</p>
-        <a href="#" class="btn btn--secondary">Learn More</a>
-      </article>
-      <article class="service-card">
-        <img src="images/service-maintenance.svg" alt="Maintenance and resealing service">
-        <h3>Maintenance</h3>
-        <p>Ensure your outdoor space stays in good condition with services like <a href="#">concrete resealing</a>, <a href="#">turf refreshes</a>, and more.</p>
+        <img src="images/proflake.jpg" alt="ProFlake garage floor flake coating">
+        <h3>ProFlake&trade;</h3>
+        <p>Decorative flake broadcast coatings for garage floors and concrete surfaces&mdash;a tough, chemical-resistant finish that transforms plain concrete into a showroom-quality floor.</p>
         <a href="#" class="btn btn--secondary">Learn More</a>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- Gallery Snapshot -->
+<section class="section gallery-section">
+  <div class="container">
+    <h2 class="section-title">Gallery Snapshot</h2>
+    <p class="section-rule section-rule--center"><span></span></p>
+
+    <div class="gallery-carousel">
+      <button class="carousel-btn carousel-btn--prev" id="gallery-prev" aria-label="Show previous photos">&#10094;</button>
+
+      <div class="gallery-track" id="gallery-track">
+        <div class="gallery-item"><img src="images/IMG_0346.JPG" alt="Covered patio with tan speckled rubber surfacing next to a pool with striped floats" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_3068.JPG" alt="Backyard pool deck in tan speckled surfacing with a decorative stacked-stone accent" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4455.JPEG" alt="Kidney-shaped pool with light gray speckled deck surfacing bordered by artificial turf" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4703.JPG" alt="Covered patio view of a pool deck finished in two-tone tan and brown rubber surfacing" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4707.JPG" alt="Sunset view of a pool with stone knee walls and tan pebble-finish deck surfacing" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4708.JPG" alt="Evening view of a stone outdoor bar on gray speckled deck surfacing with a decorative wave inlay" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4715.JPG" alt="Pool deck finished in blue-gray speckled rubber surfacing with brick coping" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4716.JPG" alt="Bright daytime pool deck in pink speckled surfacing surrounded by flower beds" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4737.JPG" alt="Crew installing gray and white speckled deck surfacing around a freeform pool and raised spa" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4741.JPG" alt="Tan speckled deck surfacing around a freeform pool with a rock waterslide and spa" loading="lazy"></div>
+        <div class="gallery-item"><img src="images/IMG_4743.JPG" alt="Aerial view of a home and pool finished with light blue speckled deck surfacing" loading="lazy"></div>
+      </div>
+
+      <button class="carousel-btn carousel-btn--next" id="gallery-next" aria-label="Show next photos">&#10095;</button>
+    </div>
+    <div class="gallery-dots" id="gallery-dots"></div>
+    <p class="gallery-section__cta"><a href="gallery.html" class="btn btn--primary">See Full Gallery</a></p>
   </div>
 </section>
 
@@ -213,11 +239,11 @@
     <p class="eyebrow eyebrow--center">COLOR OPTIONS</p>
     <p class="color-options__intro">We recognize how crucial visual appeal is when creating a new space. For that reason, we provide a broad selection of color options beyond traditional black. Our EPDM colored rubber granules make it possible to design eye-catching surfaces that elevate the overall appearance of your environment. Whether you&rsquo;re looking for a bold red or a soothing blue, we offer a variety of shades to bring your design concept to life.</p>
 
-    <button type="button" class="color-options__toggle" id="color-options-toggle" aria-expanded="true" aria-controls="color-options-panel">
+    <button type="button" class="color-options__toggle" id="color-options-toggle" aria-expanded="false" aria-controls="color-options-panel">
       <span>EPDM Colors Options</span>
       <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
     </button>
-    <div class="color-options__panel" id="color-options-panel">
+    <div class="color-options__panel is-collapsed" id="color-options-panel">
       <div class="color-options__grid" id="color-options-grid"></div>
     </div>
   </div>
@@ -230,22 +256,22 @@
     <p class="section-rule section-rule--center"><span></span></p>
     <div class="diff-grid">
       <div class="diff-card">
-        <img src="images/icon-experienced.svg" alt="" class="diff-card__icon">
+        <i class="fa-solid fa-user-group diff-card__icon-fa" aria-hidden="true"></i>
         <h3>Experienced</h3>
         <p>Our team has experience completing over 20,000 projects from $5,000 to over $500,000</p>
       </div>
       <div class="diff-card">
-        <img src="images/icon-insured.svg" alt="" class="diff-card__icon">
+        <i class="fa-solid fa-shield-halved diff-card__icon-fa" aria-hidden="true"></i>
         <h3>Insured</h3>
         <p>We carry business insurance to ensure we protect your greatest asset, your home. We maintain coverages of 2 million aggregate and 1 million per occurrence.</p>
       </div>
       <div class="diff-card">
-        <img src="images/icon-guarantees.svg" alt="" class="diff-card__icon">
+        <i class="fa-solid fa-award diff-card__icon-fa" aria-hidden="true"></i>
         <h3>Guarantees</h3>
-        <p>Gem-Scape&trade; Lifetime guarantee and 110% Zero-Worry Pledge</p>
+        <p>ProFlex&trade; Lifetime guarantee and 110% Zero-Worry Pledge</p>
       </div>
       <div class="diff-card">
-        <img src="images/icon-checks.svg" alt="" class="diff-card__icon">
+        <i class="fa-solid fa-user-shield diff-card__icon-fa" aria-hidden="true"></i>
         <h3>Background Checks</h3>
         <p>All Pro Coat employees receive annual checks to ensure the safety of our clientele.</p>
       </div>
@@ -545,29 +571,15 @@
   </div>
 </section>
 
-<!-- Walkways 4 Warriors -->
-<section class="section walkways-section">
-  <img src="images/walkways-bg.svg" alt="" class="walkways-section__bg">
-  <div class="walkways-section__overlay"></div>
-  <div class="container walkways-section__content">
-    <img src="images/walkways-logo.svg" alt="Walkways 4 Warriors logo" class="walkways-section__logo">
-    <h2>Paving The Way For Our Heroes</h2>
-    <p><strong>Walkways for Warriors&trade;</strong>&mdash;an initiative to honor the brave men and women that have served this great country! For every 100 projects Pro Coat Concrete Coatings completes, we will install a walkway for a veteran in our community at no charge.</p>
-    <div class="walkways-section__actions">
-      <a href="#" class="btn btn--primary">Learn More</a>
-      <a href="#" class="btn btn--primary">Nominate a Veteran Now</a>
-    </div>
-  </div>
-</section>
-
 <!-- Financing -->
-<section class="section financing-section">
+<section class="section financing-section" id="financing">
   <div class="container financing-grid">
     <img src="images/financing-pool.svg" alt="Backyard pool with evening lighting">
     <div class="financing-grid__copy">
-      <h2>Financing Options Available!</h2>
-      <p>Pro Coat Concrete Coatings offers multiple financing options to make your outdoor home improvement projects affordable. Click Here to Apply and Learn more</p>
-      <a href="#" class="btn btn--secondary">Learn More</a>
+      <h2>0% Interest for 15 Months!</h2>
+      <p>Pro Coat Concrete Coatings offers 0% interest financing for 15 months to make your outdoor home improvement projects affordable.* Click Here to Apply and Learn more</p>
+      <p class="financing-grid__disclaimer">*Subject to approval.</p>
+      <a href="financing.html" class="btn btn--secondary">Learn More</a>
     </div>
   </div>
 </section>
@@ -668,12 +680,14 @@
       <h3>Quick Links</h3>
       <p class="section-rule"><span></span></p>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="financing.html">Financing</a></li>
+        <li><a href="warranty.html">Warranty</a></li>
+        <li><a href="#">FAQ</a></li>
         <li><a href="#">Locations</a></li>
-        <li><a href="#">Financing</a></li>
-        <li><a href="#">Guarantees</a></li>
-        <li><a href="#">Referral Program</a></li>
       </ul>
     </div>
 
@@ -690,11 +704,9 @@
       <h3>Our Services</h3>
       <p class="section-rule"><span></span></p>
       <ul>
-        <li><a href="#">Gem-Scape&trade;</a></li>
-        <li><a href="#">Pavers/Travertine</a></li>
-        <li><a href="#">Concrete</a></li>
-        <li><a href="#">Garage Floor Epoxy</a></li>
-        <li><a href="#">Maintenance</a></li>
+        <li><a href="#color-mixer">ProFlex&trade;</a></li>
+        <li><a href="#">ProStone&trade;</a></li>
+        <li><a href="#">ProFlake&trade;</a></li>
       </ul>
     </div>
   </div>
