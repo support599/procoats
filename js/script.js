@@ -766,4 +766,12 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", render);
     render();
   }
+
+  document.querySelectorAll(".faq-item").forEach((item) => {
+    const q = item.querySelector(".faq-item__q");
+    q.addEventListener("click", () => {
+      const isOpen = item.classList.toggle("is-open");
+      q.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+  });
 });
