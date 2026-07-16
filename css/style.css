@@ -308,6 +308,25 @@ p { margin: 0 0 16px; }
 }
 .form-row > input { flex: 1; min-width: 0; }
 
+.form-feedback {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+}
+.form-feedback--success {
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  color: #1e7e34;
+}
+.form-feedback--error {
+  background: rgba(200, 16, 46, 0.08);
+  border: 1px solid rgba(200, 16, 46, 0.3);
+  color: var(--color-primary-dark);
+}
+
 input[type="text"], input[type="email"], input[type="tel"] {
   width: 100%;
   padding: 13px 16px;
@@ -1635,6 +1654,21 @@ input::placeholder { color: #8a8a86; }
   font-size: 16px;
   padding: 16px;
 }
+.financing-zip-form__success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -4px 0 14px;
+  padding: 12px 16px;
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  border-radius: var(--radius-sm);
+  color: #1e7e34;
+  font-weight: 700;
+  font-size: 14px;
+}
+.financing-zip-form__success[hidden] { display: none; }
+.financing-zip-form__success i { color: #28a745; font-size: 16px; }
 
 .financing-trust {
   display: flex;
@@ -2009,6 +2043,75 @@ input::placeholder { color: #8a8a86; }
 }
 .faq-cta h3 { font-size: 22px; margin-bottom: 10px; }
 .faq-cta p { color: var(--color-text-muted); margin-bottom: 20px; }
+
+/* ---------------------------------------------------
+   Services page
+--------------------------------------------------- */
+.services-hero {
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  text-align: center;
+  padding-block: 100px;
+}
+.services-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.services-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(156,12,34,0.55) 100%);
+}
+.services-hero__content { position: relative; }
+.services-hero__headline {
+  display: flex;
+  flex-direction: column;
+  text-transform: uppercase;
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  max-width: 880px;
+  margin: 0 auto 18px;
+}
+.services-hero__headline span { color: #fff; }
+.services-hero__headline-accent { color: var(--color-gold); }
+.services-hero__lead {
+  max-width: 700px;
+  margin: 0 auto 32px;
+  color: #d8d8d4;
+  font-size: 16px;
+}
+
+.services-benefits-grid { grid-template-columns: repeat(3, 1fr); margin-top: 32px; }
+
+.perfect-for__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 820px;
+  margin: 28px auto 0;
+}
+.perfect-for__tags .tag {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.services-upgrade { background: #111; color: #fff; }
+.services-upgrade .section-title { color: #fff; }
+.services-upgrade .warranty-list li { color: rgba(255, 255, 255, 0.85); }
+.services-upgrade .warranty-list--x li i { color: var(--color-primary); }
+.services-upgrade__solution h3 { color: #fff; margin-bottom: 10px; }
+.services-upgrade__solution p { color: rgba(255, 255, 255, 0.72); margin-bottom: 20px; }
 
 /* ---------------------------------------------------
    Mobile sticky action bar

@@ -31,14 +31,7 @@
       <ul>
         <li class="main-nav__phone"><a href="tel:9034808443"><span aria-hidden="true">&#9742;</span> 903-480-8443</a></li>
         <li><a href="about.html">About</a></li>
-        <li class="main-nav__dropdown">
-          <a href="#services">Services <span class="main-nav__caret" aria-hidden="true">&#9662;</span></a>
-          <ul class="main-nav__submenu">
-            <li><a href="#">Resorts/Hotels</a></li>
-            <li><a href="#">Pool Decks</a></li>
-            <li><a href="#">Patios</a></li>
-          </ul>
-        </li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="financing.html">Financing</a></li>
         <li><a href="warranty.html">Warranty</a></li>
@@ -51,7 +44,7 @@
       <a href="tel:9034808443" class="btn btn--pill btn--outline-dark phone-btn">
         <span class="phone-icon" aria-hidden="true">&#9742;</span> 903-480-8443
       </a>
-      <a href="#contact" class="btn btn--pill btn--primary">Request Service</a>
+      <a href="#schedule-appointment" class="btn btn--pill btn--primary">Schedule Appointment</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -70,23 +63,24 @@
       <h1 class="hero__headline"><span>The Ultimate Pool Coating Experience:</span><span class="hero__headline-accent">Pool Decks, Patios, Walkways, and Driveways</span></h1>
     </div>
 
-    <form class="hero__form" id="hero-form">
+    <form class="hero__form" id="hero-form" data-form-name="Homepage Hero - Free Design">
       <h2>Free Custom Design <span class="hero__form-accent">($500 Value)</span> &ndash; Order by July 15th!</h2>
       <div class="form-row">
-        <input type="text" placeholder="First Name" required>
-        <input type="text" placeholder="Last Name" required>
+        <input type="text" name="firstName" placeholder="First Name" required>
+        <input type="text" name="lastName" placeholder="Last Name" required>
       </div>
       <div class="form-row form-row--phone">
-        <input type="tel" placeholder="Your Phone*" required>
+        <input type="tel" name="phone" placeholder="Your Phone*" required>
       </div>
-      <input type="email" placeholder="Your Email*" required>
-      <input type="text" placeholder="Zipcode*" required>
-      <input type="text" placeholder="How Did You Hear About Us?">
+      <input type="email" name="email" placeholder="Your Email*" required>
+      <input type="text" name="zip" placeholder="Zipcode*" required>
+      <input type="text" name="howHeard" placeholder="How Did You Hear About Us?">
       <label class="checkbox-row">
-        <input type="checkbox" required>
+        <input type="checkbox" name="consent" required>
         <span>By clicking the button below, I am authorizing Pro Coat Concrete Coatings and its representatives to contact me. Contact may be attempted via phone call, email, or text message/SMS. We promise never to share or sell your information, as we hate spam as much as you do!</span>
       </label>
       <button type="submit" class="btn btn--primary btn--block">Get My Free Design</button>
+      <p class="form-feedback" hidden></p>
     </form>
   </div>
 </section>
@@ -109,9 +103,9 @@
     <div class="intro-copy">
       <p class="eyebrow"><span class="eyebrow-dash"></span></p>
       <h2>The Best Outdoor Resurfacing in Texas</h2>
-      <p>Transform your pool deck, patio, or play area with <a href="#color-mixer">Pro-Flex&trade;</a>, our proprietary poured-in-place rubber surfacing that's soft underfoot, slip-resistant, and built to handle the Texas heat. Every project is hand-poured and hand-troweled on site to fit your exact space.</p>
-      <p>Pro-Flex&trade; comes in dozens of custom color blends &mdash; mix your own combination in our Color Mix Simulator below and request a real sample before you commit.</p>
-      <a href="#color-mixer" class="btn btn--secondary">Read More</a>
+      <p>Transform your pool deck, patio, or play area with <a href="services.html">Pro-Flex&trade;</a>, our proprietary poured-in-place rubber surfacing that's soft underfoot, slip-resistant, and built to handle the Texas heat. Every project is hand-poured and hand-troweled on site to fit your exact space.</p>
+      <p>Pro-Flex&trade; comes in dozens of custom color blends &mdash; request a real sample to find your perfect match before you commit.</p>
+      <a href="services.html" class="btn btn--secondary">Read More</a>
     </div>
     <div class="intro-media">
       <img src="images/intro-video-photo.jpg" alt="Pro-Flex poured rubber pool deck surfacing project">
@@ -125,20 +119,20 @@
       <article class="service-card">
         <img src="images/proflex.jpg" alt="Pro-Flex poured rubber pool deck surfacing project">
         <h3>Pro-Flex&trade;</h3>
-        <p>Our proprietary poured-in-place rubber surfacing is soft underfoot, slip-resistant, and available in dozens of custom color blends &mdash; see it come to life in our <a href="#color-mixer">Color Mix Simulator</a> above.</p>
-        <a href="#color-mixer" class="btn btn--secondary">Learn More</a>
+        <p>Our proprietary poured-in-place rubber surfacing is soft underfoot, slip-resistant, and available in dozens of custom color blends to match your home&rsquo;s exact style.</p>
+        <a href="services.html" class="btn btn--secondary">Learn More</a>
       </article>
       <article class="service-card">
         <img src="images/gallery/before-after/ba-05-before.jpg" alt="Diamond grinding preparation on a worn concrete pool deck">
         <h3>Surface Grinding</h3>
         <p>Before any coating goes down, we diamond-grind the existing concrete to remove old sealers and open the surface pores. This mechanical profiling is what lets Pro-Flex&trade; bond properly &mdash; skip it, and even the best coating peels early.</p>
-        <a href="#contact" class="btn btn--secondary">Learn More</a>
+        <a href="#schedule-appointment" class="btn btn--secondary">Learn More</a>
       </article>
       <article class="service-card">
         <img src="images/gallery/completed/img_4453.jpg" alt="Close-up of dark coping band separating a speckled pool deck from the water">
         <h3>Coping</h3>
         <p>Coping is the cap that finishes your pool&rsquo;s edge &mdash; we install both cantilevered concrete and bullnose stone profiles for a seamless, slip-resistant transition from deck to water that&rsquo;s comfortable to sit and stand on.</p>
-        <a href="#contact" class="btn btn--secondary">Learn More</a>
+        <a href="#schedule-appointment" class="btn btn--secondary">Learn More</a>
       </article>
     </div>
   </div>
@@ -194,12 +188,12 @@
         <li>Expertly handcrafted</li>
         <li>Choose from 3 timeless design options: Star, Compass Rose or Fleur-de-lis</li>
       </ul>
-      <a href="#contact" class="btn btn--primary">Schedule An Appointment</a>
+      <a href="#schedule-appointment" class="btn btn--primary">Schedule An Appointment</a>
     </div>
   </div>
 </section>
 
-<!-- EPDM Color Mixer -->
+<!-- EPDM Color Mixer (hidden)
 <section class="section mixer-section" id="color-mixer">
   <div class="container mixer-intro">
     <p class="eyebrow">EPDM POURED RUBBER</p>
@@ -247,6 +241,7 @@
     </div>
   </div>
 </section>
+-->
 
 <!-- Differentiators -->
 <section class="section diff-section">
@@ -567,8 +562,11 @@
           </label>
           <div class="financing-zip-form__input-wrap">
             <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-            <input type="text" id="zip-input" placeholder="Enter your Zip Code" required>
+            <input type="text" id="zip-input" placeholder="Enter your Zip Code" inputmode="numeric" maxlength="10" autocomplete="off" required>
           </div>
+          <p class="financing-zip-form__success" hidden>
+            <i class="fa-solid fa-circle-check" aria-hidden="true"></i> Looks Like We Service Your Area!
+          </p>
           <button type="submit" class="btn btn--primary btn--block">Check My Zip</button>
         </form>
 
@@ -590,7 +588,7 @@
 <section class="cta-banner">
   <div class="container">
     <h2>Schedule Your Free Estimate Today.</h2>
-    <a href="#contact" class="btn btn--primary">Schedule Appointment</a>
+    <a href="#schedule-appointment" class="btn btn--primary">Schedule Appointment</a>
   </div>
 </section>
 
@@ -608,22 +606,23 @@
     <div class="contact-form-card" id="schedule-appointment">
       <h2>Schedule Appointment</h2>
       <p class="section-rule"><span></span></p>
-      <form>
+      <form id="appointment-form" data-form-name="Schedule Appointment">
         <div class="form-row">
-          <input type="text" placeholder="First Name" required>
-          <input type="text" placeholder="Last Name" required>
+          <input type="text" name="firstName" placeholder="First Name" required>
+          <input type="text" name="lastName" placeholder="Last Name" required>
         </div>
         <div class="form-row form-row--phone">
-          <input type="tel" placeholder="Your Phone*" required>
+          <input type="tel" name="phone" placeholder="Your Phone*" required>
         </div>
-        <input type="email" placeholder="Your Email*" required>
-        <input type="text" placeholder="Zipcode*" required>
-        <input type="text" placeholder="How Did You Hear About Us?">
+        <input type="email" name="email" placeholder="Your Email*" required>
+        <input type="text" name="zip" placeholder="Zipcode*" required>
+        <input type="text" name="howHeard" placeholder="How Did You Hear About Us?">
         <label class="checkbox-row">
-          <input type="checkbox" required>
+          <input type="checkbox" name="consent" required>
           <span>By clicking the button below, I am authorizing Pro Coat Concrete Coatings and its representatives to contact me. Contact may be attempted via phone call, email, or text message/SMS. We promise never to share or sell your information, as we hate spam as much as you do!</span>
         </label>
         <button type="submit" class="btn btn--primary btn--block">Submit</button>
+        <p class="form-feedback" hidden></p>
       </form>
     </div>
   </div>
@@ -784,7 +783,7 @@
     <div class="faq-cta">
       <h3>Still Have Questions?</h3>
       <p>Our team would be happy to answer your questions, discuss your project, and help you decide whether rubber surfacing is the right solution for your home. Contact Pro Coat today to schedule your consultation and receive a free estimate.</p>
-      <a href="#contact" class="btn btn--primary">Contact Us</a>
+      <a href="#schedule-appointment" class="btn btn--primary">Contact Us</a>
     </div>
   </div>
 </section>
@@ -812,7 +811,7 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="#services">Services</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="financing.html">Financing</a></li>
         <li><a href="warranty.html">Warranty</a></li>
@@ -825,7 +824,7 @@
       <h3>You Ask - We Answer</h3>
       <p class="section-rule"><span></span></p>
       <ul>
-        <li><a href="#">Our Services</a></li>
+        <li><a href="services.html">Our Services</a></li>
         <li><a href="#">Contact Us</a></li>
       </ul>
     </div>
@@ -834,7 +833,7 @@
       <h3>Our Services</h3>
       <p class="section-rule"><span></span></p>
       <ul>
-        <li><a href="#color-mixer">Pro-Flex&trade;</a></li>
+        <li><a href="services.html">Pro-Flex&trade;</a></li>
         <li><a href="#">ProStone&trade;</a></li>
         <li><a href="#">ProFlake&trade;</a></li>
       </ul>

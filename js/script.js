@@ -14,12 +14,97 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  const LEAD_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/0gwWTx8NhG85hURqflAb/webhook-trigger/f568d33b-2f37-4a9c-a114-1d0ae847eeb4";
+
   document.querySelectorAll("form").forEach((form) => {
+    if (form.id === "zip-form") return;
+
+    const feedback = form.querySelector(".form-feedback");
+    const submitBtn = form.querySelector("button[type='submit']");
+    const showFeedback = (type, message) => {
+      if (!feedback) return;
+      feedback.textContent = message;
+      feedback.className = "form-feedback form-feedback--" + type;
+      feedback.hidden = false;
+    };
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      alert("This is a placeholder form — no data is submitted.");
+
+      const originalBtnText = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+      }
+      if (feedback) feedback.hidden = true;
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.formName = form.dataset.formName || form.id || "Website Form";
+      data.page = window.location.href;
+      data.submittedAt = new Date().toISOString();
+
+      fetch(LEAD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Webhook responded with " + response.status);
+          form.reset();
+          showFeedback("success", "Thanks! Your request has been submitted — we'll be in touch shortly.");
+        })
+        .catch(() => {
+          showFeedback("error", "Something went wrong. Please call us at 903-480-8443.");
+        })
+        .finally(() => {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+          }
+        });
     });
   });
+
+  const zipForm = document.getElementById("zip-form");
+  if (zipForm) {
+    const zipInput = document.getElementById("zip-input");
+    const zipBtn = zipForm.querySelector("button[type='submit']");
+    const zipSuccess = zipForm.querySelector(".financing-zip-form__success");
+    let zipConfirmed = false;
+
+    const isValidZip = (value) => /^\d{5}(-\d{4})?$/.test(value.trim());
+
+    zipInput.addEventListener("input", () => {
+      zipInput.setCustomValidity("");
+      if (zipConfirmed) {
+        zipConfirmed = false;
+        if (zipSuccess) zipSuccess.hidden = true;
+        if (zipBtn) zipBtn.textContent = "Check My Zip";
+      }
+    });
+
+    zipForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!zipConfirmed) {
+        if (!isValidZip(zipInput.value)) {
+          zipInput.setCustomValidity("Please enter a valid 5-digit zip code.");
+          zipInput.reportValidity();
+          return;
+        }
+        zipInput.setCustomValidity("");
+        zipConfirmed = true;
+        if (zipSuccess) zipSuccess.hidden = false;
+        if (zipBtn) zipBtn.textContent = "Continue";
+      } else {
+        const target = document.getElementById("schedule-appointment");
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          window.location.href = "index.html#schedule-appointment";
+        }
+      }
+    });
+  }
 
   const track = document.getElementById("reviews-track");
   const prevBtn = document.getElementById("reviews-prev");
