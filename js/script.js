@@ -71,16 +71,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const zipBtn = zipForm.querySelector("button[type='submit']");
     const zipSuccess = zipForm.querySelector(".financing-zip-form__success");
     let zipConfirmed = false;
+    let zipCheckTimer = null;
 
     const isValidZip = (value) => /^\d{5}(-\d{4})?$/.test(value.trim());
 
+    const resetZipState = () => {
+      zipConfirmed = false;
+      if (zipCheckTimer) {
+        clearTimeout(zipCheckTimer);
+        zipCheckTimer = null;
+      }
+      if (zipSuccess) zipSuccess.hidden = true;
+      if (zipBtn) {
+        zipBtn.disabled = false;
+        zipBtn.textContent = "Check My Zip";
+      }
+    };
+
     zipInput.addEventListener("input", () => {
       zipInput.setCustomValidity("");
-      if (zipConfirmed) {
-        zipConfirmed = false;
-        if (zipSuccess) zipSuccess.hidden = true;
-        if (zipBtn) zipBtn.textContent = "Check My Zip";
-      }
+      resetZipState();
     });
 
     zipForm.addEventListener("submit", (e) => {
@@ -92,9 +102,19 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
         zipInput.setCustomValidity("");
-        zipConfirmed = true;
-        if (zipSuccess) zipSuccess.hidden = false;
-        if (zipBtn) zipBtn.textContent = "Continue";
+        if (zipBtn) {
+          zipBtn.disabled = true;
+          zipBtn.textContent = "Checking...";
+        }
+        zipCheckTimer = setTimeout(() => {
+          zipConfirmed = true;
+          zipCheckTimer = null;
+          if (zipSuccess) zipSuccess.hidden = false;
+          if (zipBtn) {
+            zipBtn.disabled = false;
+            zipBtn.textContent = "Continue";
+          }
+        }, 3000);
       } else {
         const target = document.getElementById("schedule-appointment");
         if (target) {

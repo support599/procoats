@@ -30,8 +30,21 @@
     <nav class="main-nav" id="main-nav">
       <ul>
         <li class="main-nav__phone"><a href="tel:9034808443"><span aria-hidden="true">&#9742;</span> 903-480-8443</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
+        <li class="main-nav__dropdown">
+          <a href="about.html">About <span class="main-nav__caret" aria-hidden="true">&#9662;</span></a>
+          <ul class="main-nav__submenu">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="become-a-dealer.html">Become a Dealer</a></li>
+          </ul>
+        </li>
+        <li class="main-nav__dropdown">
+          <a href="services.html">Services <span class="main-nav__caret" aria-hidden="true">&#9662;</span></a>
+          <ul class="main-nav__submenu">
+            <li><a href="services.html">Pro-Flex&trade;</a></li>
+            <li><a href="surface-grinding.html">Surface Grinding</a></li>
+            <li><a href="coping.html">Coping</a></li>
+          </ul>
+        </li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="financing.html">Financing</a></li>
         <li><a href="warranty.html">Warranty</a></li>
@@ -62,6 +75,7 @@
     <p class="services-hero__lead">Pro-Flex is Pro Coat&rsquo;s premium rubber pool deck surfacing system, designed to transform worn, cracked, and uncomfortable concrete into a beautiful, slip-resistant surface that&rsquo;s built for years of enjoyment.</p>
     <a href="index.html#schedule-appointment" class="btn btn--primary">Get Your Free Estimate</a>
   </div>
+
 </section>
 
 <!-- Intro -->
@@ -126,13 +140,13 @@
     <h2 class="section-title">Perfect For</h2>
     <p class="section-rule section-rule--center"><span></span></p>
     <div class="perfect-for__tags">
-      <span class="tag">Pool Decks</span>
-      <span class="tag">Patios</span>
-      <span class="tag">Walkways</span>
-      <span class="tag">Outdoor Living Areas</span>
-      <span class="tag">Splash Pads</span>
-      <span class="tag">Steps</span>
-      <span class="tag">Courtyards</span>
+      <span class="tag"><i class="fa-solid fa-water-ladder" aria-hidden="true"></i>Pool Decks</span>
+      <span class="tag"><i class="fa-solid fa-umbrella-beach" aria-hidden="true"></i>Patios</span>
+      <span class="tag"><i class="fa-solid fa-road" aria-hidden="true"></i>Walkways</span>
+      <span class="tag"><i class="fa-solid fa-couch" aria-hidden="true"></i>Outdoor Living Areas</span>
+      <span class="tag"><i class="fa-solid fa-children" aria-hidden="true"></i>Splash Pads</span>
+      <span class="tag"><i class="fa-solid fa-stairs" aria-hidden="true"></i>Steps</span>
+      <span class="tag"><i class="fa-solid fa-building-columns" aria-hidden="true"></i>Courtyards</span>
     </div>
   </div>
 </section>
@@ -146,9 +160,9 @@
       <h2>The Pro Coat Installation Difference</h2>
       <p>Every Pro-Flex installation begins with proper surface preparation &mdash; the foundation of a long-lasting project.</p>
       <p>Our experienced installation team repairs damaged concrete when needed, thoroughly prepares the surface, and applies our premium rubber surfacing system with meticulous attention to detail. The result is a seamless, professional finish that looks incredible and performs year after year.</p>
-      <p><strong>We don&rsquo;t cut corners. We build surfaces that are made to be enjoyed.</strong></p>
     </div>
   </div>
+  <p class="container pull-quote">We don&rsquo;t cut corners. We build surfaces that are made to be enjoyed.</p>
 </section>
 
 <!-- Why upgrade -->
@@ -173,18 +187,33 @@
         <a href="index.html#schedule-appointment" class="btn btn--primary">Get Your Free Estimate</a>
       </div>
     </div>
+
+    <div class="stat-compare" style="margin-top: 48px;">
+      <div class="stat-compare__box">
+        <span class="stat-compare__icon"><i class="fa-solid fa-house-chimney-window" aria-hidden="true"></i></span>
+        <p class="stat-compare__title">5 Year Full Warranty</p>
+        <p class="stat-compare__desc">Complete labor &amp; material coverage on every qualifying residential installation.</p>
+      </div>
+      <div class="stat-compare__box">
+        <span class="stat-compare__icon"><i class="fa-solid fa-infinity" aria-hidden="true"></i></span>
+        <p class="stat-compare__title">Lifetime Labor Coverage</p>
+        <p class="stat-compare__desc">Labor coverage continues for life after the initial 5-year period.</p>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- Warranty callout -->
-<div class="container guarantee-strip" id="warranty-callout">
-  <img src="images/credential-warranty.png" alt="Pro Coat Lifetime Guarantee badge" class="guarantee-strip__badge">
-  <div class="guarantee-strip__copy">
-    <h3>Backed by the Pro Coat Warranty</h3>
-    <p>We stand behind every Pro-Flex&trade; installation with one of the strongest warranties in the industry, so you can invest with confidence knowing your new pool deck is built to last.</p>
-    <a href="warranty.html" class="btn btn--secondary">See Warranty Details</a>
+<section class="section" id="warranty-callout">
+  <div class="container guarantee-strip">
+    <img src="images/guarantee-badge.svg" alt="Pro Coat Lifetime Guarantee badge" class="guarantee-strip__badge">
+    <div class="guarantee-strip__copy">
+      <h3>Backed by the Pro Coat Warranty</h3>
+      <p>We stand behind every Pro-Flex&trade; installation with one of the strongest warranties in the industry, so you can invest with confidence knowing your new pool deck is built to last.</p>
+      <a href="warranty.html" class="btn btn--secondary">See Warranty Details</a>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- Final CTA -->
 <section class="cta-banner">
@@ -224,6 +253,7 @@
         <li><a href="warranty.html">Warranty</a></li>
         <li><a href="index.html#faq">FAQ</a></li>
         <li><a href="index.html#">Locations</a></li>
+        <li><a href="become-a-dealer.html">Become a Dealer</a></li>
       </ul>
     </div>
 
@@ -241,8 +271,8 @@
       <p class="section-rule"><span></span></p>
       <ul>
         <li><a href="services.html">Pro-Flex&trade;</a></li>
-        <li><a href="index.html#">ProStone&trade;</a></li>
-        <li><a href="index.html#">ProFlake&trade;</a></li>
+        <li><a href="surface-grinding.html">Surface Grinding</a></li>
+        <li><a href="coping.html">Coping</a></li>
       </ul>
     </div>
   </div>
