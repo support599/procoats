@@ -114,6 +114,14 @@ document.addEventListener("DOMContentLoaded", () => {
             zipBtn.disabled = false;
             zipBtn.textContent = "Continue";
           }
+          setTimeout(() => {
+            const target = document.getElementById("schedule-appointment");
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+              window.location.href = "index.html#schedule-appointment";
+            }
+          }, 1200);
         }, 3000);
       } else {
         const target = document.getElementById("schedule-appointment");
@@ -124,6 +132,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+  }
+
+  const zipPopup = document.getElementById("zip-popup-overlay");
+  if (zipPopup) {
+    const closeZipPopup = () => {
+      zipPopup.hidden = true;
+      document.body.style.overflow = "";
+    };
+    const zipPopupClose = document.getElementById("zip-popup-close");
+    if (zipPopupClose) zipPopupClose.addEventListener("click", closeZipPopup);
+    zipPopup.addEventListener("click", (e) => {
+      if (e.target === zipPopup) closeZipPopup();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !zipPopup.hidden) closeZipPopup();
+    });
+
+    const zipPopupFeedback = zipPopup.querySelector(".form-feedback");
+    if (zipPopupFeedback) {
+      const feedbackObserver = new MutationObserver(() => {
+        if (zipPopupFeedback.classList.contains("form-feedback--success")) {
+          setTimeout(() => {
+            closeZipPopup();
+            const target = document.getElementById("schedule-appointment");
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 1800);
+        }
+      });
+      feedbackObserver.observe(zipPopupFeedback, { attributes: true, attributeFilter: ["class"] });
+    }
   }
 
   const track = document.getElementById("reviews-track");
