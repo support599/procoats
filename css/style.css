@@ -393,6 +393,24 @@ input::placeholder, textarea::placeholder { color: #8a8a86; }
 }
 .checkbox-row input { margin-top: 3px; }
 
+.sms-consent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form-legal-links {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #e7e7e2;
+}
+.form-legal-links a {
+  color: inherit;
+  text-decoration: underline;
+}
+.form-legal-links a:hover { color: var(--color-primary); }
+.modal-card .form-legal-links,
+.contact-form-card .form-legal-links { color: var(--color-text-muted); }
+
 /* ---------------------------------------------------
    Credibility bar
 --------------------------------------------------- */

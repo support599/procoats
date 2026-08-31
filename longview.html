@@ -257,10 +257,17 @@
         <input type="email" name="email" placeholder="Your Email*" required>
         <input type="text" name="zip" placeholder="Zipcode*" required>
         <input type="hidden" name="city" value="Longview, TX">
-        <label class="checkbox-row">
-          <input type="checkbox" name="consent" required>
-          <span>By clicking the button below, I am authorizing Pro Coat Concrete Coatings and its representatives to contact me. Contact may be attempted via phone call, email, or text message/SMS. We promise never to share or sell your information, as we hate spam as much as you do!</span>
-        </label>
+        <div class="sms-consent">
+          <label class="checkbox-row">
+            <input type="checkbox" name="smsTransactionalConsent" value="yes">
+            <span>I consent to receive transactional messages from Pro Coat Concrete Coatings at the phone number provided, including messages related to my inquiry, estimates, appointments, scheduling, and service updates. Message frequency may vary. Message &amp; data rates may apply. Reply HELP for help or STOP to opt out.</span>
+          </label>
+          <label class="checkbox-row">
+            <input type="checkbox" name="smsMarketingConsent" value="yes">
+            <span>I consent to receive marketing and promotional messages from Pro Coat Concrete Coatings at the phone number provided, including promotions, special offers, and service-related marketing. Message frequency may vary. Message &amp; data rates may apply. Reply HELP for help or STOP to opt out.</span>
+          </label>
+          <p class="form-legal-links"><a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms-and-conditions.html" target="_blank" rel="noopener">Terms and Conditions</a></p>
+        </div>
         <button type="submit" class="btn btn--primary btn--block">Get My Free Estimate</button>
         <p class="form-feedback" hidden></p>
       </form>
