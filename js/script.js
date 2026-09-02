@@ -44,11 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
       data.submittedAt = new Date().toISOString();
 
       // Checkboxes are omitted from FormData when unchecked, but GHL needs an
-      // explicit record of both SMS consent selections either way.
-      const smsTransactional = form.querySelector('input[name="smsTransactionalConsent"]');
-      const smsMarketing = form.querySelector('input[name="smsMarketingConsent"]');
-      if (smsTransactional) data.smsTransactionalConsent = smsTransactional.checked ? "yes" : "no";
-      if (smsMarketing) data.smsMarketingConsent = smsMarketing.checked ? "yes" : "no";
+      // explicit record of the SMS consent selection either way.
+      const smsConsent = form.querySelector('input[name="smsConsent"]');
+      if (smsConsent) data.smsConsent = smsConsent.checked ? "yes" : "no";
 
       fetch(LEAD_WEBHOOK_URL, {
         method: "POST",
