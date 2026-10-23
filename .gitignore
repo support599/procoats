@@ -1,4 +1,5 @@
 .DS_Store
 .gstack/
+.netlify/
 images/before-after-gallery/
 images/after-only-gallery/

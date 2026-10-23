@@ -17,6 +17,7 @@
   --color-white: #ffffff;
   --color-black: #111111;
   --font-body: "Poppins", Arial, Helvetica, sans-serif;
+  --font-heading: "Times New Roman", Times, serif;
   --radius-sm: 6px;
   --radius-md: 10px;
   --container-width: 1180px;
@@ -40,7 +41,7 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; margin: 0; padding: 0; }
-h1, h2, h3 { font-weight: 700; line-height: 1.25; margin: 0 0 16px; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.25; margin: 0 0 16px; }
 p { margin: 0 0 16px; }
 
 .container {
@@ -284,7 +285,24 @@ p { margin: 0 0 16px; }
   margin: 0;
 }
 .hero__headline span { display: block; }
-.hero__headline-accent { color: #fff; }
+.hero__headline-emphasis {
+  font-size: clamp(56px, 9vw, 108px);
+  line-height: 0.9;
+  margin: 4px 0;
+}
+.hero__headline-accent {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 4px 14px;
+  margin-top: 8px;
+}
+.hero__subhead {
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 400;
+  text-transform: none;
+  margin: 16px 0 0;
+}
 .hero__form {
   background: rgba(17, 17, 17, 0.6);
   backdrop-filter: blur(2px);
@@ -580,6 +598,8 @@ input::placeholder, textarea::placeholder { color: #8a8a86; }
   border-radius: 50%;
   background: var(--color-text);
 }
+.promo-grid__copy .warranty-list li { padding-left: 0; }
+.promo-grid__copy .warranty-list li::before { content: none; }
 
 /* ---------------------------------------------------
    EPDM Color Mixer
@@ -1823,6 +1843,7 @@ input::placeholder, textarea::placeholder { color: #8a8a86; }
 
 .home-page .promo-section { background: #111; }
 .home-page .promo-grid__copy h2 { color: #fff; }
+.home-page .promo-grid__copy p { color: rgba(255, 255, 255, 0.72); }
 .home-page .promo-grid__copy li { color: rgba(255, 255, 255, 0.85); }
 .home-page .promo-grid__copy li::before { background: var(--color-primary); }
 .home-page .diff-section { background: #111; border-top: none; }
@@ -2664,4 +2685,268 @@ input::placeholder, textarea::placeholder { color: #8a8a86; }
 
   .specialty-media { grid-template-columns: 1fr 1fr; gap: 8px; }
   .specialty-media img { min-height: 140px; }
+}
+
+/* ---------------------------------------------------
+   Colors Page
+--------------------------------------------------- */
+.color-hero {
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  padding-block: 90px 70px;
+}
+.color-hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.color-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.2) 100%);
+}
+.color-hero__content { position: relative; max-width: 620px; }
+.color-hero__headline {
+  font-size: clamp(34px, 5vw, 56px);
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 18px;
+}
+.color-hero__rule { width: 70px; height: 4px; background: var(--color-primary); margin-bottom: 20px; }
+.color-hero__lead { font-size: 16px; color: rgba(255, 255, 255, 0.85); margin-bottom: 16px; }
+.color-hero__note { font-weight: 700; font-size: 16px; }
+
+.color-section { padding-block: 64px; }
+.color-section__intro { text-align: center; max-width: 620px; margin: 0 auto 40px; }
+.color-section__heading {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: clamp(26px, 3.4vw, 36px);
+  margin-bottom: 8px;
+}
+.color-section__heading--warm { color: #8a5a2b; }
+.color-section__heading--cool { color: #5b6b7a; }
+.color-section__heading--blue { color: #2f5d8a; }
+.color-section--warm { background: #fff; }
+.color-section--cool { background: var(--color-bg-alt); }
+.color-section--blue { background: #fff; }
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px;
+}
+.color-swatch { text-align: center; }
+.color-swatch__img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  display: block;
+}
+.color-swatch__name { font-weight: 700; font-size: 13px; letter-spacing: 0.4px; text-transform: uppercase; }
+
+.color-cta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-md);
+  padding: 32px 36px;
+  flex-wrap: wrap;
+}
+.color-cta__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.color-cta__copy { flex: 1; min-width: 240px; }
+.color-cta__copy h3 { font-size: 19px; margin-bottom: 4px; text-transform: uppercase; }
+.color-cta__copy p { color: var(--color-text-muted); margin: 0; }
+
+.color-trust-strip { background: #111; color: #fff; padding-block: 32px; }
+.color-trust-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.color-trust-strip__item i { color: var(--color-primary); font-size: 22px; margin-bottom: 10px; }
+.color-trust-strip__item h4 { font-size: 14px; text-transform: uppercase; margin-bottom: 4px; }
+.color-trust-strip__item p { font-size: 13px; color: rgba(255, 255, 255, 0.65); margin: 0; }
+
+@media (max-width: 768px) {
+  .color-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .color-swatch { flex: 0 0 62%; scroll-snap-align: center; }
+  .color-cta { flex-direction: column; text-align: center; }
+  .color-trust-strip__grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+}
+
+/* ---------------------------------------------------
+   Estate-Stone page
+--------------------------------------------------- */
+.estate-hero {
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 640px;
+}
+.estate-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.estate-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 38%, rgba(0,0,0,0.2) 68%, rgba(0,0,0,0.05) 100%);
+}
+.estate-hero__inner { position: relative; padding-block: 110px 90px; }
+.estate-hero__content { max-width: 560px; }
+.estate-hero__title {
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.estate-hero__by {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e7e7e2;
+  margin: 0 0 22px;
+}
+.estate-hero__by-rule { display: inline-block; width: 36px; height: 2px; background: var(--color-primary); }
+.estate-hero__tagline {
+  font-weight: 700;
+  font-size: clamp(20px, 2.6vw, 26px);
+  line-height: 1.3;
+  margin: 0 0 14px;
+}
+.estate-hero__lead { color: #d8d8d4; font-size: 16px; max-width: 420px; margin: 0 0 28px; }
+
+.style-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.style-card { display: block; }
+.style-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  display: block;
+  margin-bottom: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.style-card:hover img { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.14); }
+.style-card h3 { text-align: center; font-size: 16px; margin: 0; }
+.style-card img.style-card__img--top { object-position: center 15%; }
+
+.estate-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  text-align: center;
+}
+.estate-feature__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-primary);
+  font-size: 20px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  margin-bottom: 14px;
+}
+.estate-feature h3 { font-size: 17px; margin-bottom: 6px; }
+.estate-feature p { font-size: 14px; color: var(--color-text-muted); margin: 0; }
+
+.estate-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  text-align: center;
+}
+.estate-step__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+.estate-step h3 { font-size: 17px; margin-bottom: 6px; }
+.estate-step p { font-size: 14px; color: var(--color-text-muted); margin: 0 auto; max-width: 260px; }
+
+.estate-qa {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.estate-qa__item h3 { font-size: 16px; margin-bottom: 8px; }
+.estate-qa__item p { font-size: 14px; color: var(--color-text-muted); margin: 0; }
+
+.estate-cta { background: var(--color-black); color: #fff; }
+.estate-cta__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.estate-cta__copy h2 { color: #fff; margin-bottom: 14px; }
+.estate-cta__copy p { color: rgba(255, 255, 255, 0.72); max-width: 420px; }
+.estate-cta .contact-form-card { background: #fff; }
+.estate-cta .contact-form-card .checkbox-row { color: var(--color-text-muted); }
+
+@media (max-width: 992px) {
+  .estate-hero__content { max-width: 100%; }
+  .estate-cta__grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+@media (max-width: 768px) {
+  .style-grid { grid-template-columns: repeat(2, 1fr); }
+  .estate-features { grid-template-columns: 1fr; gap: 28px; }
+  .estate-steps { grid-template-columns: 1fr; gap: 28px; }
+  .estate-qa { grid-template-columns: 1fr; gap: 24px; }
+}
+
+@media (max-width: 640px) {
+  .estate-hero { min-height: 560px; }
+  .estate-hero__inner { padding-block: 80px 56px; }
+  .estate-hero__by { justify-content: center; }
+  .estate-hero__content { text-align: center; margin-inline: auto; }
+  .estate-hero__lead { margin-inline: auto; }
+  .style-grid { grid-template-columns: 1fr; }
 }
