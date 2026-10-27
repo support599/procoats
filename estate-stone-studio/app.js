@@ -185,7 +185,7 @@ $('generate').onclick=async()=>{
     f.append('image',blob,'backyard.jpg');
     f.append('selection',JSON.stringify(state));
     f.append('turnstile',token);
-    const res=await fetch('/api/generate',{method:'POST',body:f});
+    const res=await fetch('https://procoat-estate-stone.procoat.workers.dev/api/generate',{method:'POST',body:f});
     const d=await res.json().catch(()=>({}));
     if(!res.ok) throw Error(d.error||'Generation failed. Please try again.');
     const b64=d.data?.[0]?.b64_json;
@@ -262,7 +262,7 @@ $('download').onclick=()=>{
 /* ---------- Availability check ---------- */
 async function availability(){
   try{
-    const r=await fetch('/api/status');
+    const r=await fetch('https://procoat-estate-stone.procoat.workers.dev/api/status');
     if(!r.ok) throw Error();
     const d=await r.json();
     ready=d.ready;
