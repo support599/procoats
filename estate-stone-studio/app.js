@@ -1,9 +1,9 @@
 const $=id=>document.getElementById(id);
-const LEAD_WEBHOOK_URL="https://services.leadconnectorhq.com/hooks/0gwWTx8NhG85hURqflAb/webhook-trigger/f568d33b-2f37-4a9c-a114-1d0ae847eeb4";
 
 let state={design:'D01',palette:'C01',border:'B01',medallion:'none',accent:'dark',place:'Centered on open floor'};
 let photo=null,generated=null,ready=false,busy=false,skippedPreview=false,toastTimer,humanWidget;
 
+const TOTAL_STEPS=8;
 const STEP_LABELS={
   1:'Upload your photo',
   2:'Choose your layout',
@@ -11,7 +11,8 @@ const STEP_LABELS={
   4:'Frame the design',
   5:'Add a focal point',
   6:'Review & create your preview',
-  7:'Your design'
+  7:'Almost there!',
+  8:'Your design'
 };
 let step=1;
 
@@ -23,15 +24,16 @@ function showStep(n, scroll){
   document.querySelectorAll('.step-screen').forEach(el=>{
     el.hidden = Number(el.dataset.step) !== n;
   });
-  $('stepperFill').style.width=(n/7*100)+'%';
-  $('stepperText').textContent='Step '+n+' of 7 — '+STEP_LABELS[n];
+  $('stepperFill').style.width=(n/TOTAL_STEPS*100)+'%';
+  $('stepperText').textContent='Step '+n+' of '+TOTAL_STEPS+' — '+STEP_LABELS[n];
   $('stepperPhotoWrap').hidden = !photo || n===1;
 
   $('backBtn').style.visibility = n===1 ? 'hidden' : 'visible';
-  $('backBtn').disabled = n===7;
+  $('backBtn').disabled = n===TOTAL_STEPS;
 
-  // Step 6 drives its own advance (via Generate); step 7 is terminal.
-  $('nextBtn').hidden = (n===6 || n===7);
+  // Step 6 drives its own advance (via Generate); step 7 (the lead gate) drives its
+  // own advance (via form submit); step 8 is terminal.
+  $('nextBtn').hidden = (n===6 || n===7 || n===8);
 
   $('nextBtn').disabled = (n===1 && !photo);
 
@@ -143,12 +145,23 @@ $('dropzone').ondrop=e=>{e.preventDefault();upload(e.dataTransfer.files[0])};
 $('useExample').onclick=()=>{load(assets.demo);toast('Example photo loaded.')};
 
 /* ---------- Human check ---------- */
+function turnstileFailed(){
+  // Turnstile itself refused to load (e.g. this domain isn't on the sitekey's
+  // allow-list yet) — don't leave a dead "Generate" button behind a broken
+  // widget. Fall back to the same "unavailable" path as a down AI backend,
+  // so people can still submit their info and get a human follow-up.
+  ready=false;
+  $('generate').disabled=true;
+  $('human-check').hidden=true;
+  $('unavailableNotice').hidden=false;
+  $('aiHint').textContent='Realistic previews are not available right now.';
+}
 function loadHumanCheck(siteKey){
   const s=document.createElement('script');
   s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
   s.async=true;
-  s.onload=()=>{humanWidget=turnstile.render('#human-check',{sitekey:siteKey,size:'flexible',theme:'light'})};
-  s.onerror=()=>{$('aiHint').textContent='The quick human check could not load. Check your connection or turn off content blockers, then refresh the page.'};
+  s.onload=()=>{humanWidget=turnstile.render('#human-check',{sitekey:siteKey,size:'flexible',theme:'light','error-callback':turnstileFailed})};
+  s.onerror=turnstileFailed;
   document.head.append(s);
 }
 const humanToken=()=>humanWidget===undefined?'':(turnstile.getResponse(humanWidget)||'');
@@ -183,6 +196,7 @@ $('generate').onclick=async()=>{
     $('resultImg').src=im.src;
     $('resultPhotoWrap').hidden=false;
     $('download').hidden=false;
+    $('revealSkippedNote').hidden=true;
     showStep(7, true);
     toast('Your realistic concept preview is ready.');
   }catch(e){
@@ -201,8 +215,24 @@ $('skipToLead').onclick=()=>{
   skippedPreview=true;
   $('resultPhotoWrap').hidden=true;
   $('download').hidden=true;
+  $('revealSkippedNote').hidden=false;
   showStep(7, true);
 };
+
+/* ---------- Reveal gate (step 7) — reuses the site's own form handler for the
+   actual webhook POST (see js/script.js), so this behaves identically to every
+   other lead form on the site. We just watch for its success state to advance. ---------- */
+function watchRevealGateForm(){
+  const form=$('revealGateForm');
+  const feedback=form.querySelector('.form-feedback');
+  const obs=new MutationObserver(()=>{
+    if(!feedback.hidden && feedback.classList.contains('form-feedback--success')){
+      obs.disconnect();
+      setTimeout(()=>showStep(8, true), 900);
+    }
+  });
+  obs.observe(feedback,{attributes:true,attributeFilter:['class','hidden']});
+}
 
 /* ---------- Download ---------- */
 $('download').onclick=()=>{
@@ -228,42 +258,6 @@ $('download').onclick=()=>{
     setTimeout(()=>URL.revokeObjectURL(u),5000);
   },'image/png');
 };
-
-/* ---------- Lead form ---------- */
-$('leadForm').addEventListener('submit', async e=>{
-  e.preventDefault();
-  const form=e.target;
-  const submitBtn=form.querySelector('button[type="submit"]');
-  const feedback=$('leadFeedback');
-  const showFeedback=(type,msg)=>{feedback.textContent=msg;feedback.className='form-feedback form-feedback--'+type;feedback.hidden=false};
-  submitBtn.disabled=true;
-  const originalText=submitBtn.textContent;
-  submitBtn.textContent='Sending...';
-  const data=Object.fromEntries(new FormData(form).entries());
-  data.formName=form.dataset.formName;
-  data.page=window.location.href;
-  data.submittedAt=new Date().toISOString();
-  data.design=state.design;
-  data.palette=state.palette;
-  data.border=state.border;
-  data.medallion=state.medallion;
-  data.accent=state.accent;
-  data.hadPreview=!skippedPreview;
-  try{
-    const res=await fetch(LEAD_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-    if(!res.ok) throw Error('Webhook responded with '+res.status);
-    if(generated) $('download').click();
-    form.reset();
-    showFeedback('success', generated
-      ? "Thanks! Your design is downloading now, and a ProCoat specialist will be in touch shortly."
-      : "Thanks! A ProCoat specialist will be in touch shortly with your design and next steps.");
-  }catch(err){
-    showFeedback('error','Something went wrong. Please call us at 903-480-8443.');
-  }finally{
-    submitBtn.disabled=false;
-    submitBtn.textContent=originalText;
-  }
-});
 
 /* ---------- Availability check ---------- */
 async function availability(){
@@ -292,3 +286,4 @@ async function availability(){
 refreshAll();
 showStep(1);
 availability();
+watchRevealGateForm();

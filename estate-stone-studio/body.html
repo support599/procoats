@@ -107,25 +107,42 @@
     <p class="small" style="margin-top:14px">Concept preview. Screen colors, lighting and texture affect appearance. Approve a physical sample before installation.</p>
   </section>
 
-  <!-- Step 7: Results -->
+  <!-- Step 7: Reveal gate — same form/fields/webhook as the rest of the site -->
   <section class="step-screen" data-step="7" hidden>
+    <h2 class="step-title"><span class="num">✓</span>Almost there!</h2>
+    <p class="step-sub">Before we reveal your new design, where should we send your results?</p>
+    <div class="lead-card">
+      <form id="revealGateForm" data-form-name="Estate-Stone Studio - Reveal Gate">
+        <div class="form-row">
+          <input type="text" name="firstName" placeholder="First Name" required>
+          <input type="text" name="lastName" placeholder="Last Name" required>
+        </div>
+        <div class="form-row form-row--phone">
+          <input type="tel" name="phone" placeholder="Your Phone*" required>
+        </div>
+        <input type="email" name="email" placeholder="Your Email*" required>
+        <input type="text" name="zip" placeholder="Zipcode*" required>
+        <input type="text" name="howHeard" placeholder="How Did You Hear About Us?">
+        <div class="sms-consent">
+          <label class="checkbox-row">
+            <input type="checkbox" name="smsConsent" value="yes">
+            <span>By checking this box, I agree to receive non-marketing customer care SMS messages from ProCoat Concrete Coatings regarding my estimate request, appointments, project updates, service requests, and related services. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. See our <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="terms-and-conditions.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>.</span>
+          </label>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">Reveal My Design →</button>
+        <p class="form-feedback" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Step 8: Results -->
+  <section class="step-screen" data-step="8" hidden>
     <h2 class="step-title" style="justify-content:center"><span class="num">✓</span>Your Estate-Stone design</h2>
     <div class="result-photo" id="resultPhotoWrap">
       <img id="resultImg" alt="Your realistic Estate-Stone preview">
     </div>
     <button class="btn btn-block" id="download">↓ Download your design</button>
-
-    <div class="lead-card" id="leadCard">
-      <h3>Get a copy &amp; a quote</h3>
-      <span class="small">We'll save this design to your file and have a ProCoat specialist follow up with next steps and pricing.</span>
-      <form id="leadForm" data-form-name="Estate-Stone Studio - Design Result">
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="tel" name="phone" placeholder="Phone" required>
-        <button type="submit" class="btn primary">Email me this design</button>
-        <p class="form-feedback" id="leadFeedback" hidden></p>
-      </form>
-    </div>
+    <p class="small" id="revealSkippedNote" hidden style="margin-top:14px;text-align:center">Thanks! A ProCoat specialist will follow up with your personalized Estate-Stone design and next steps.</p>
   </section>
 
 </main>
