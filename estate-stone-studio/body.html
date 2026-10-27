@@ -1,0 +1,140 @@
+<section class="procoat-studio" aria-label="Estate-Stone design studio">
+
+<section class="intro">
+  <div class="eyebrow">Your space. Your signature.</div>
+  <h1>See the possibilities.</h1>
+  <p>Upload a photo of your patio, pool deck or driveway and we'll build you a realistic Estate-Stone preview in a few quick steps.</p>
+</section>
+
+<div class="stepper">
+  <div class="stepper-track"><div class="stepper-fill" id="stepperFill"></div></div>
+  <div class="stepper-label">
+    <span id="stepperText">Step 1 of 7 — Upload your photo</span>
+    <span class="stepper-photo" id="stepperPhotoWrap" hidden><img id="stepperPhoto" alt=""></span>
+  </div>
+</div>
+
+<main class="wizard" id="wizard">
+
+  <!-- Step 1: Upload -->
+  <section class="step-screen" data-step="1">
+    <h2 class="step-title"><span class="num">1</span>Upload your photo</h2>
+    <p class="step-sub">A wide photo with the full floor visible works best. JPG, PNG or WebP, up to 15&nbsp;MB.</p>
+    <div class="upload" id="dropzone">
+      <div>
+        <strong>Start with your own space</strong>
+        <span class="small">Drag a photo here, or choose a file below.</span>
+      </div>
+      <button class="btn primary" id="uploadBtn">＋ Upload photo</button>
+      <input hidden type="file" accept="image/jpeg,image/png,image/webp" id="upload">
+      <button class="use-example" id="useExample" type="button">Try an example photo instead</button>
+    </div>
+    <div class="upload-preview" id="uploadPreviewWrap" hidden>
+      <img id="uploadPreview" alt="Your uploaded photo">
+      <div>
+        <div class="ok">✓ Photo ready</div>
+        <div class="small">Looks good — tap Next to continue.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2: Layout -->
+  <section class="step-screen" data-step="2" hidden>
+    <h2 class="step-title"><span class="num">2</span>Choose your layout</h2>
+    <p class="step-sub">The pattern your Estate-Stone surface will be laid in.</p>
+    <div class="grid" id="designs"></div>
+  </section>
+
+  <!-- Step 3: Color -->
+  <section class="step-screen" data-step="3" hidden>
+    <h2 class="step-title"><span class="num">3</span>Find your color</h2>
+    <p class="step-sub" id="paletteDesc">A curated palette of natural stone-inspired tones.</p>
+    <div class="grid" id="palettes"></div>
+  </section>
+
+  <!-- Step 4: Border + accent -->
+  <section class="step-screen" data-step="4" hidden>
+    <h2 class="step-title"><span class="num">4</span>Frame the design</h2>
+    <p class="step-sub">Choose a border style and an accent tone to finish the edge.</p>
+    <div class="grid" id="borders"></div>
+    <label for="accent">Border &amp; medallion accent</label>
+    <select id="accent" class="field">
+      <option value="dark">Darkest palette tone</option>
+      <option value="light">Lightest palette tone</option>
+    </select>
+  </section>
+
+  <!-- Step 5: Medallion + placement -->
+  <section class="step-screen" data-step="5" hidden>
+    <h2 class="step-title"><span class="num">5</span>Add a focal point</h2>
+    <p class="step-sub">Optional. A medallion inlay adds a custom signature touch.</p>
+    <label for="medallion">Medallion</label>
+    <select class="field" id="medallion"><option value="none">No medallion</option></select>
+    <div id="medImage"></div>
+    <label for="place">Placement</label>
+    <select class="field" id="place">
+      <option>Centered on open floor</option>
+      <option>Near house / entry</option>
+      <option>Near foreground</option>
+    </select>
+    <p class="small">Placement and scale are illustrative. Final details are confirmed with ProCoat.</p>
+  </section>
+
+  <!-- Step 6: Review & generate -->
+  <section class="step-screen" data-step="6" hidden>
+    <h2 class="step-title"><span class="num">6</span>Review &amp; create your preview</h2>
+    <div class="review-photo" id="reviewPhotoWrap">
+      <img id="reviewPhoto" alt="Your photo, ready to transform">
+      <div class="busy" id="busy">
+        <div>
+          <div class="spinner"></div>
+          <strong>Creating your Estate-Stone preview</strong>
+          <p>Matching the perspective, texture and light.<br>This can take about a minute.</p>
+        </div>
+      </div>
+    </div>
+    <div class="summary">
+      <h3 id="summaryName"></h3>
+      <p id="summaryDetail"></p>
+    </div>
+    <div id="human-check"></div>
+    <button class="btn primary btn-block" id="generate" disabled>Create my realistic preview ✧</button>
+    <p id="aiHint" class="small" style="margin-top:10px">Checking availability…</p>
+    <div class="notice" id="unavailableNotice" hidden>
+      <b>Realistic previews are temporarily unavailable.</b> You can still tell us about your project below and a ProCoat specialist will follow up with your design.
+      <div style="margin-top:12px"><button class="btn dark" id="skipToLead">Continue without a preview →</button></div>
+    </div>
+    <p class="small" style="margin-top:14px">Concept preview. Screen colors, lighting and texture affect appearance. Approve a physical sample before installation.</p>
+  </section>
+
+  <!-- Step 7: Results -->
+  <section class="step-screen" data-step="7" hidden>
+    <h2 class="step-title" style="justify-content:center"><span class="num">✓</span>Your Estate-Stone design</h2>
+    <div class="result-photo" id="resultPhotoWrap">
+      <img id="resultImg" alt="Your realistic Estate-Stone preview">
+    </div>
+    <button class="btn btn-block" id="download">↓ Download your design</button>
+
+    <div class="lead-card" id="leadCard">
+      <h3>Get a copy &amp; a quote</h3>
+      <span class="small">We'll save this design to your file and have a ProCoat specialist follow up with next steps and pricing.</span>
+      <form id="leadForm" data-form-name="Estate-Stone Studio - Design Result">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Phone" required>
+        <button type="submit" class="btn primary">Email me this design</button>
+        <p class="form-feedback" id="leadFeedback" hidden></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="wizard-nav">
+  <button class="btn" id="backBtn">← Back</button>
+  <span class="spacer"></span>
+  <button class="btn primary" id="nextBtn">Next →</button>
+</nav>
+
+<div class="toast" id="toast" role="status"></div>
+</section>
