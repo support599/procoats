@@ -1,7 +1,8 @@
 const $=id=>document.getElementById(id);
 
 let state={design:'D01',palette:'C01',border:'B01',medallion:'none',accent:'dark',place:'Centered on open floor'};
-let photo=null,generated=null,ready=false,busy=false,skippedPreview=false,toastTimer,humanWidget;
+let photo=null,ready=false,busy=false,skippedPreview=false,toastTimer,humanWidget;
+let gallery=[],leadCaptured=false;
 
 const TOTAL_STEPS=8;
 const STEP_LABELS={
@@ -192,12 +193,17 @@ $('generate').onclick=async()=>{
     if(!b64) throw Error('No image came back. Please try again.');
     const im=new Image();
     await new Promise((resolve,reject)=>{im.onload=resolve;im.onerror=reject;im.src='data:image/jpeg;base64,'+b64});
-    generated=im;
+    gallery.push({
+      src:im.src,w:photo.naturalWidth,h:photo.naturalHeight,
+      design:state.design,palette:state.palette,border:state.border,medallion:state.medallion,
+      summaryName:summaryNameFor(state)
+    });
     $('resultImg').src=im.src;
     $('resultPhotoWrap').hidden=false;
     $('download').hidden=false;
     $('revealSkippedNote').hidden=true;
-    showStep(7, true);
+    renderGallery();
+    proceedPastGenerate();
     toast('Your realistic concept preview is ready.');
   }catch(e){
     toast(e.message||'Unable to generate preview. Please try again.');
@@ -213,50 +219,93 @@ $('generate').onclick=async()=>{
 
 $('skipToLead').onclick=()=>{
   skippedPreview=true;
-  $('resultPhotoWrap').hidden=true;
-  $('download').hidden=true;
+  if(!gallery.length){
+    $('resultPhotoWrap').hidden=true;
+    $('download').hidden=true;
+  }
   $('revealSkippedNote').hidden=false;
-  showStep(7, true);
+  proceedPastGenerate();
 };
 
 /* ---------- Reveal gate (step 7) — reuses the site's own form handler for the
    actual webhook POST (see js/script.js), so this behaves identically to every
-   other lead form on the site. We just watch for its success state to advance. ---------- */
+   other lead form on the site. We just watch for its success state to advance.
+   Once the lead is captured once, later generations skip straight to step 8. ---------- */
 function watchRevealGateForm(){
   const form=$('revealGateForm');
   const feedback=form.querySelector('.form-feedback');
   const obs=new MutationObserver(()=>{
     if(!feedback.hidden && feedback.classList.contains('form-feedback--success')){
       obs.disconnect();
+      leadCaptured=true;
       setTimeout(()=>showStep(8, true), 900);
     }
   });
   obs.observe(feedback,{attributes:true,attributeFilter:['class','hidden']});
 }
+function proceedPastGenerate(){
+  showStep(leadCaptured?8:7, true);
+}
+
+/* ---------- Add more designs (step 8) ---------- */
+function summaryNameFor(s){
+  return designs.find(x=>x[0]===s.design)[1]+' / '+palettes.find(x=>x[0]===s.palette)[1];
+}
+$('tryAnotherLook').onclick=()=>{ showStep(2, true) };
+$('tryDifferentPhoto').onclick=()=>{
+  photo=null;
+  $('uploadPreviewWrap').hidden=true;
+  showStep(1, true);
+};
+function renderGallery(){
+  $('galleryWrap').hidden = gallery.length<2;
+  $('galleryGrid').innerHTML='';
+  gallery.slice(0,-1).reverse().forEach(entry=>{
+    const card=document.createElement('div');
+    card.className='gallery-item';
+    const img=document.createElement('img');
+    img.src=entry.src;img.alt='';
+    const label=document.createElement('div');
+    label.className='gallery-item-label';
+    label.textContent=entry.summaryName;
+    const dl=document.createElement('button');
+    dl.type='button';dl.className='btn';dl.textContent='↓ Download';
+    dl.onclick=()=>downloadEntry(entry);
+    card.append(img,label,dl);
+    $('galleryGrid').append(card);
+  });
+}
 
 /* ---------- Download ---------- */
+function downloadEntry(entry){
+  const im=new Image();
+  im.onload=()=>{
+    const out=document.createElement('canvas');
+    out.width=entry.w;
+    out.height=entry.h+110;
+    const x=out.getContext('2d');
+    x.drawImage(im,0,0,entry.w,entry.h);
+    x.fillStyle='#f5f3ee';
+    x.fillRect(0,entry.h,out.width,110);
+    x.fillStyle='#26342b';
+    x.font='bold 22px Arial';
+    x.fillText('PROCOAT / ESTATE-STONE',24,entry.h+31);
+    x.font='16px Arial';
+    x.fillText(entry.summaryName+' · '+entry.border+' · '+(entry.medallion==='none'?'No medallion':entry.medallion),24,entry.h+59);
+    x.font='12px Arial';
+    x.fillText('AI concept — Approve physical samples and final layout with ProCoat.',24,entry.h+85);
+    out.toBlob(b=>{
+      if(!b) return toast('Download failed. Try again.');
+      const u=URL.createObjectURL(b),a=document.createElement('a');
+      a.href=u;a.download='ProCoat-Estate-Stone-'+entry.design+'-'+entry.palette+'.png';a.click();
+      setTimeout(()=>URL.revokeObjectURL(u),5000);
+    },'image/png');
+  };
+  im.src=entry.src;
+}
 $('download').onclick=()=>{
-  if(!generated) return;
-  const out=document.createElement('canvas');
-  out.width=photo.naturalWidth;
-  out.height=photo.naturalHeight+110;
-  const x=out.getContext('2d');
-  x.drawImage(generated,0,0,photo.naturalWidth,photo.naturalHeight);
-  x.fillStyle='#f5f3ee';
-  x.fillRect(0,photo.naturalHeight,out.width,110);
-  x.fillStyle='#26342b';
-  x.font='bold 22px Arial';
-  x.fillText('PROCOAT / ESTATE-STONE',24,photo.naturalHeight+31);
-  x.font='16px Arial';
-  x.fillText($('summaryName').textContent+' · '+state.border+' · '+(state.medallion==='none'?'No medallion':state.medallion),24,photo.naturalHeight+59);
-  x.font='12px Arial';
-  x.fillText('AI concept — Approve physical samples and final layout with ProCoat.',24,photo.naturalHeight+85);
-  out.toBlob(b=>{
-    if(!b) return toast('Download failed. Try again.');
-    const u=URL.createObjectURL(b),a=document.createElement('a');
-    a.href=u;a.download='ProCoat-Estate-Stone-'+state.design+'-'+state.palette+'.png';a.click();
-    setTimeout(()=>URL.revokeObjectURL(u),5000);
-  },'image/png');
+  if(!gallery.length) return;
+  downloadEntry(gallery[gallery.length-1]);
 };
 
 /* ---------- Availability check ---------- */

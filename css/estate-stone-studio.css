@@ -76,6 +76,19 @@
 .procoat-studio .form-feedback--success{color:#3c6b4a}
 .procoat-studio .form-feedback--error{color:#af3029}
 
+/* Add more designs (step 8) */
+.procoat-studio .more-looks{margin-top:26px;padding-top:22px;border-top:1px solid #e2e1d9}
+.procoat-studio .more-looks h3{font-family:Georgia,serif;font-weight:400;font-size:19px;margin:0 0 6px}
+.procoat-studio .more-looks .small{display:block;margin-bottom:16px}
+.procoat-studio .more-looks-actions{display:flex;flex-direction:column;gap:10px}
+.procoat-studio .gallery{margin-top:26px}
+.procoat-studio .gallery h3{font-family:Georgia,serif;font-weight:400;font-size:17px;margin:0 0 12px}
+.procoat-studio .gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.procoat-studio .gallery-item{border:1px solid #e0dfd6;border-radius:10px;background:white;overflow:hidden;padding-bottom:10px}
+.procoat-studio .gallery-item img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.procoat-studio .gallery-item-label{font-size:11px;color:#62675e;padding:8px 10px 6px}
+.procoat-studio .gallery-item .btn{margin:0 10px;width:calc(100% - 20px);padding:8px 10px;font-size:12px}
+
 /* Buttons */
 .procoat-studio .btn{border:1px solid #d3d4ca;background:#fff;border-radius:7px;padding:12px 18px;color:#30372e;font-size:13px;font-weight:600}
 .procoat-studio .primary{background:#af3029;color:white;border-color:#af3029}
