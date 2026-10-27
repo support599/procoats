@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const LEAD_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/0gwWTx8NhG85hURqflAb/webhook-trigger/f568d33b-2f37-4a9c-a114-1d0ae847eeb4";
 
   document.querySelectorAll("form").forEach((form) => {
-    if (form.id === "zip-form" || form.id === "leadForm") return;
+    if (form.id === "zip-form") return;
 
     const feedback = form.querySelector(".form-feedback");
     const submitBtn = form.querySelector("button[type='submit']");

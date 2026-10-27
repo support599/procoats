@@ -1,114 +1,105 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b32b25"><title>Estate-Stone Studio | ProCoat</title><meta name="description" content="Upload a photo of your patio, pool deck or driveway and preview Estate-Stone layouts, colors, borders and medallions in a few guided steps.">
 <style>
-*{box-sizing:border-box}
-[hidden]{display:none !important}
-body{margin:0;background:#f5f3ee;color:#242b29;font-family:Arial,Helvetica,sans-serif}
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.45;cursor:not-allowed}
+.procoat-studio, .procoat-studio *{box-sizing:border-box}
+.procoat-studio [hidden]{display:none !important}
+.procoat-studio{background:#f5f3ee;color:#242b29;font-family:Arial,Helvetica,sans-serif}
+.procoat-studio button,.procoat-studio input,.procoat-studio select{font:inherit}
+.procoat-studio button{cursor:pointer}
+.procoat-studio button:disabled{opacity:.45;cursor:not-allowed}
 
-header{height:84px;border-bottom:1px solid #dedbd2;display:flex;align-items:center;justify-content:space-between;padding:12px 4vw;background:#fff}
-header img{width:127px;mix-blend-mode:multiply}
-header span{font-size:12px;letter-spacing:2px;color:#74776d}
+.procoat-studio .intro{padding:28px 4vw 20px;text-align:center}
+.procoat-studio .eyebrow{font-size:11px;letter-spacing:2.6px;color:#a62a22;font-weight:700;text-transform:uppercase}
+.procoat-studio h1{font-family:Georgia,serif;font-size:36px;font-weight:400;letter-spacing:-1px;margin:9px 0}
+.procoat-studio p{line-height:1.6}
+.procoat-studio .intro p{margin:0 auto;color:#6c7066;font-size:14px;max-width:460px}
 
-.intro{padding:28px 4vw 20px;text-align:center}
-.eyebrow{font-size:11px;letter-spacing:2.6px;color:#a62a22;font-weight:700;text-transform:uppercase}
-h1{font-family:Georgia,serif;font-size:36px;font-weight:400;letter-spacing:-1px;margin:9px 0}
-p{line-height:1.6}
-.intro p{margin:0 auto;color:#6c7066;font-size:14px;max-width:460px}
-
-/* Stepper / progress */
-.stepper{position:sticky;top:0;z-index:5;background:#f5f3ee;padding:14px 4vw 10px;border-bottom:1px solid #e6e4da}
-.stepper-track{height:4px;background:#e6e4da;border-radius:4px;overflow:hidden}
-.stepper-fill{height:100%;background:#af3029;width:14.2857%;transition:width .3s ease}
-.stepper-label{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11px;letter-spacing:.5px;color:#73776c;text-transform:uppercase;font-weight:700}
-.stepper-photo{display:flex;align-items:center;gap:8px}
-.stepper-photo img{width:30px;height:30px;object-fit:cover;border-radius:5px;border:1px solid #e1e2d9}
+/* Stepper / progress — offset below the real site's sticky header (measured: ~96px desktop / ~71px mobile) */
+.procoat-studio .stepper{position:sticky;top:96px;z-index:5;background:#f5f3ee;padding:14px 4vw 10px;border-bottom:1px solid #e6e4da}
+.procoat-studio .stepper-track{height:4px;background:#e6e4da;border-radius:4px;overflow:hidden}
+.procoat-studio .stepper-fill{height:100%;background:#af3029;width:14.2857%;transition:width .3s ease}
+.procoat-studio .stepper-label{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:11px;letter-spacing:.5px;color:#73776c;text-transform:uppercase;font-weight:700}
+.procoat-studio .stepper-photo{display:flex;align-items:center;gap:8px}
+.procoat-studio .stepper-photo img{width:30px;height:30px;object-fit:cover;border-radius:5px;border:1px solid #e1e2d9}
 
 /* Wizard shell */
-.wizard{max-width:620px;margin:0 auto;padding:30px 4vw calc(120px + env(safe-area-inset-bottom))}
-.step-screen h2.step-title{font-size:12px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;margin:0 0 18px;display:flex;align-items:center;gap:10px}
-.step-screen .num{background:#f1eee5;color:#8f8b78;border-radius:50%;width:26px;height:26px;display:grid;place-items:center;letter-spacing:0;font-size:12px;flex-shrink:0}
-.step-screen .step-sub{color:#6c7066;font-size:13px;margin:-10px 0 20px;max-width:480px}
+.procoat-studio .wizard{max-width:620px;margin:0 auto;padding:30px 4vw 10px}
+.procoat-studio .step-screen h2.step-title{font-size:12px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase;margin:0 0 18px;display:flex;align-items:center;gap:10px}
+.procoat-studio .step-screen .num{background:#f1eee5;color:#8f8b78;border-radius:50%;width:26px;height:26px;display:grid;place-items:center;letter-spacing:0;font-size:12px;flex-shrink:0}
+.procoat-studio .step-screen .step-sub{color:#6c7066;font-size:13px;margin:-10px 0 20px;max-width:480px}
 
 /* Upload step */
-.upload{border:1px dashed #b9bbaf;border-radius:10px;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:#fff8}
-.upload strong{display:block;font-size:16px;margin-bottom:6px}
-.small{font-size:11px;color:#757a6e;line-height:1.5}
-.upload-preview{margin-top:18px;display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #e2e1d9;border-radius:10px;padding:14px}
-.upload-preview img{width:72px;height:72px;object-fit:cover;border-radius:7px}
-.upload-preview .ok{color:#3c6b4a;font-size:12px;font-weight:700}
-.use-example{background:none;border:none;color:#a62a22;font-size:12px;text-decoration:underline;padding:4px}
+.procoat-studio .upload{border:1px dashed #b9bbaf;border-radius:10px;padding:28px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:#fff8}
+.procoat-studio .upload strong{display:block;font-size:16px;margin-bottom:6px}
+.procoat-studio .small{font-size:11px;color:#757a6e;line-height:1.5}
+.procoat-studio .upload-preview{margin-top:18px;display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #e2e1d9;border-radius:10px;padding:14px}
+.procoat-studio .upload-preview img{width:72px;height:72px;object-fit:cover;border-radius:7px}
+.procoat-studio .upload-preview .ok{color:#3c6b4a;font-size:12px;font-weight:700}
+.procoat-studio .use-example{background:none;border:none;color:#a62a22;font-size:12px;text-decoration:underline;padding:4px}
 
 /* Choice grids (layout / color / border) */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{text-align:left;min-width:0;border:1px solid #e1e2d9;border-radius:8px;background:white;padding:7px;transition:.15s}
-.card:hover{border-color:#a5aa97}
-.card.active{border:2px solid #b3362e;padding:6px;box-shadow:0 0 0 2px #b3362e09}
-.thumb{width:100%;height:84px;object-fit:cover;display:block;border-radius:5px}
-.card span{display:block;font-size:12px;padding:8px 2px 4px;line-height:1.35}
-.card small{color:#8c9086;font-size:9px}
-.swatches{display:flex;height:46px;border-radius:5px;overflow:hidden}
-.swatches i{flex:1}
+.procoat-studio .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.procoat-studio .card{text-align:left;min-width:0;border:1px solid #e1e2d9;border-radius:8px;background:white;padding:7px;transition:.15s}
+.procoat-studio .card:hover{border-color:#a5aa97}
+.procoat-studio .card.active{border:2px solid #b3362e;padding:6px;box-shadow:0 0 0 2px #b3362e09}
+.procoat-studio .thumb{width:100%;height:84px;object-fit:cover;display:block;border-radius:5px}
+.procoat-studio .card span{display:block;font-size:12px;padding:8px 2px 4px;line-height:1.35}
+.procoat-studio .card small{color:#8c9086;font-size:9px}
+.procoat-studio .swatches{display:flex;height:46px;border-radius:5px;overflow:hidden}
+.procoat-studio .swatches i{flex:1}
 
 /* Fields (accent / medallion / placement selects) */
-.field{width:100%;border:1px solid #d9dcd0;background:white;border-radius:7px;padding:12px;font-size:13px;color:#30372e;margin:6px 0 14px}
-label{font-size:12px;color:#656c60;font-weight:600}
-#medImage{margin:4px 0 14px}
-#medImage img{height:90px;object-fit:contain}
+.procoat-studio .field{width:100%;border:1px solid #d9dcd0;background:white;border-radius:7px;padding:12px;font-size:13px;color:#30372e;margin:6px 0 14px}
+.procoat-studio label{font-size:12px;color:#656c60;font-weight:600}
+.procoat-studio #medImage{margin:4px 0 14px}
+.procoat-studio #medImage img{height:90px;object-fit:contain}
 
 /* Review + generate */
-.review-photo{position:relative;overflow:hidden;background:#ddd9ce;border-radius:12px;min-height:220px;box-shadow:0 15px 35px #242b2910;margin-bottom:18px}
-.review-photo img{display:block;width:100%;height:auto}
-.summary{background:white;border:1px solid #e0dfd6;border-radius:10px;padding:16px;margin-bottom:18px}
-.summary h3{margin:0 0 6px;font-size:15px}
-.summary p{font-size:12px;color:#73776e;margin:0}
-#human-check{margin-bottom:14px}
-#human-check:empty{display:none}
-.notice{background:#ede9df;border-radius:8px;padding:12px 15px;color:#62675e;font-size:12px;line-height:1.6;margin-top:14px}
-.notice b{color:#2e372f}
-.busy{display:none;position:absolute;inset:0;background:#213028ae;color:white;place-items:center;text-align:center;padding:30px}
-.spinner{width:33px;height:33px;border:2px solid #ffffff50;border-top-color:white;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px}
-@keyframes spin{to{transform:rotate(360deg)}}
+.procoat-studio .review-photo{position:relative;overflow:hidden;background:#ddd9ce;border-radius:12px;min-height:220px;box-shadow:0 15px 35px #242b2910;margin-bottom:18px}
+.procoat-studio .review-photo img{display:block;width:100%;height:auto}
+.procoat-studio .summary{background:white;border:1px solid #e0dfd6;border-radius:10px;padding:16px;margin-bottom:18px}
+.procoat-studio .summary h3{margin:0 0 6px;font-size:15px}
+.procoat-studio .summary p{font-size:12px;color:#73776e;margin:0}
+.procoat-studio #human-check{margin-bottom:14px}
+.procoat-studio #human-check:empty{display:none}
+.procoat-studio .notice{background:#ede9df;border-radius:8px;padding:12px 15px;color:#62675e;font-size:12px;line-height:1.6;margin-top:14px}
+.procoat-studio .notice b{color:#2e372f}
+.procoat-studio .busy{display:none;position:absolute;inset:0;background:#213028ae;color:white;place-items:center;text-align:center;padding:30px}
+.procoat-studio .spinner{width:33px;height:33px;border:2px solid #ffffff50;border-top-color:white;border-radius:50%;animation:procoat-studio-spin 1s linear infinite;margin:0 auto 15px}
+@keyframes procoat-studio-spin{to{transform:rotate(360deg)}}
 
 /* Results */
-.result-photo{overflow:hidden;background:#ddd9ce;border-radius:12px;box-shadow:0 15px 35px #242b2910;margin-bottom:16px}
-.result-photo img{display:block;width:100%;height:auto}
-.lead-card{margin-top:22px;background:white;border:1px solid #e0dfd6;border-radius:12px;padding:22px}
-.lead-card h3{font-family:Georgia,serif;font-weight:400;font-size:21px;margin:0 0 6px}
-.lead-card .small{margin-bottom:16px;display:block}
-.lead-card form{display:flex;flex-direction:column;gap:10px}
-.form-feedback{font-size:12px;margin:4px 0 0}
-.form-feedback--success{color:#3c6b4a}
-.form-feedback--error{color:#af3029}
+.procoat-studio .result-photo{overflow:hidden;background:#ddd9ce;border-radius:12px;box-shadow:0 15px 35px #242b2910;margin-bottom:16px}
+.procoat-studio .result-photo img{display:block;width:100%;height:auto}
+.procoat-studio .lead-card{margin-top:22px;background:white;border:1px solid #e0dfd6;border-radius:12px;padding:22px}
+.procoat-studio .lead-card h3{font-family:Georgia,serif;font-weight:400;font-size:21px;margin:0 0 6px}
+.procoat-studio .lead-card .small{margin-bottom:16px;display:block}
+.procoat-studio .lead-card form{display:flex;flex-direction:column;gap:10px}
+.procoat-studio .form-feedback{font-size:12px;margin:4px 0 0}
+.procoat-studio .form-feedback--success{color:#3c6b4a}
+.procoat-studio .form-feedback--error{color:#af3029}
 
 /* Buttons */
-.btn{border:1px solid #d3d4ca;background:#fff;border-radius:7px;padding:12px 18px;color:#30372e;font-size:13px;font-weight:600}
-.primary{background:#af3029;color:white;border-color:#af3029}
-.dark{background:#2a332e;color:white;border-color:#2a332e}
-.btn-block{width:100%}
+.procoat-studio .btn{border:1px solid #d3d4ca;background:#fff;border-radius:7px;padding:12px 18px;color:#30372e;font-size:13px;font-weight:600}
+.procoat-studio .primary{background:#af3029;color:white;border-color:#af3029}
+.procoat-studio .dark{background:#2a332e;color:white;border-color:#2a332e}
+.procoat-studio .btn-block{width:100%}
 
-/* Bottom nav */
-.wizard-nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #e2e1d9;padding:14px 4vw calc(14px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;gap:12px;z-index:5;transition:transform .08s linear}
-.wizard-nav .btn{min-width:110px}
-.wizard-nav .spacer{flex:1}
+/* Bottom nav — flows with the page, not pinned to the viewport */
+.procoat-studio .wizard-nav{max-width:620px;margin:0 auto;border-top:1px solid #e2e1d9;padding:18px 4vw 30px;display:flex;justify-content:space-between;gap:12px}
+.procoat-studio .wizard-nav .btn{min-width:110px}
+.procoat-studio .wizard-nav .spacer{flex:1}
 
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#26342b;color:white;box-shadow:0 4px 25px #0003;border-radius:8px;padding:13px 20px;max-width:90vw;font-size:13px;z-index:10;display:none}
-
-footer{margin:30px 4vw;color:#8b8e82;font-size:11px;display:flex;justify-content:space-between;gap:20px;border-top:1px solid #dfdfd5;padding-top:20px}
+.procoat-studio .toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#26342b;color:white;box-shadow:0 4px 25px #0003;border-radius:8px;padding:13px 20px;max-width:90vw;font-size:13px;z-index:10;display:none}
 
 @media(max-width:720px){
-  header{height:70px}
-  header span{font-size:9px;letter-spacing:1px}
-  h1{font-size:28px}
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .thumb{height:78px}
-  footer{flex-direction:column}
-  .wizard{padding-bottom:calc(140px + env(safe-area-inset-bottom))}
+  .procoat-studio h1{font-size:28px}
+  .procoat-studio .grid{grid-template-columns:repeat(2,1fr)}
+  .procoat-studio .thumb{height:78px}
+  .procoat-studio .stepper{top:71px}
 }
 
 </style></head><body>
-<header><img id="logo" alt="ProCoat Concrete Coatings"><span>ESTATE-STONE / DESIGN STUDIO</span></header>
+<section class="procoat-studio" aria-label="Estate-Stone design studio">
 
 <section class="intro">
   <div class="eyebrow">Your space. Your signature.</div>
@@ -246,8 +237,8 @@ footer{margin:30px 4vw;color:#8b8e82;font-size:11px;display:flex;justify-content
   <button class="btn primary" id="nextBtn">Next →</button>
 </nav>
 
-<footer><span>PROCOAT · ESTATE-STONE DESIGN STUDIO</span><span>Designed for patios, pool decks &amp; driveways.</span></footer>
 <div class="toast" id="toast" role="status"></div>
+</section>
 
 <script>
 const designs=[['D01','Natural Flagstone','Organic irregular polygon stones'],['D02','Classic Ashlar','Mixed squares and rectangles'],['D03','Grand Limestone','Large rectangular limestone blocks'],['D04','Courtyard Tile','Even square tile grid'],['D05','Diagonal Tile','Square tiles rotated 45 degrees'],['D06','Heritage Brick','Running bond brick'],['D07','Wood Plank','Long staggered rectangular planks'],['D08','Seamless Stone','Continuous stone texture with no decorative grid']];
@@ -277,24 +268,8 @@ let step=1;
 
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',4200)}
 
-/* ---------- Keep the bottom nav pinned to the real visible viewport on mobile browsers.
-   iOS/Android browser toolbars resize the visual viewport without resizing the layout
-   viewport, which can leave position:fixed elements stranded below what's on screen. ---------- */
-function pinNavToVisualViewport(){
-  const vv = window.visualViewport;
-  const nav = document.querySelector('.wizard-nav');
-  if(!vv || !nav) return;
-  const update=()=>{
-    const gap = window.innerHeight - (vv.height + vv.offsetTop);
-    nav.style.transform = gap > 0 ? 'translateY(-'+gap+'px)' : '';
-  };
-  vv.addEventListener('resize', update);
-  vv.addEventListener('scroll', update);
-  update();
-}
-
 /* ---------- Step navigation ---------- */
-function showStep(n){
+function showStep(n, scroll){
   step=n;
   document.querySelectorAll('.step-screen').forEach(el=>{
     el.hidden = Number(el.dataset.step) !== n;
@@ -311,13 +286,18 @@ function showStep(n){
 
   $('nextBtn').disabled = (n===1 && !photo);
 
-  window.scrollTo({top:0,behavior:'instant' in document.documentElement.style ? 'instant' : 'auto'});
+  // Scroll to the top of the studio section itself, not the top of the page —
+  // this is embedded mid-page, with the real site header/content above it.
+  // Only do this on an actual step change (Next/Back/Generate), never on initial load.
+  if(scroll){
+    document.querySelector('.stepper').scrollIntoView({block:'start',behavior:'instant' in document.documentElement.style ? 'instant' : 'auto'});
+  }
 }
 
-$('backBtn').onclick=()=>{ if(step>1) showStep(step-1) };
+$('backBtn').onclick=()=>{ if(step>1) showStep(step-1, true) };
 $('nextBtn').onclick=()=>{
   if(step===1 && !photo){ toast('Upload a photo to continue.'); return }
-  if(step<6) showStep(step+1);
+  if(step<6) showStep(step+1, true);
 };
 
 /* ---------- Choice grids ---------- */
@@ -454,7 +434,7 @@ $('generate').onclick=async()=>{
     $('resultImg').src=im.src;
     $('resultPhotoWrap').hidden=false;
     $('download').hidden=false;
-    showStep(7);
+    showStep(7, true);
     toast('Your realistic concept preview is ready.');
   }catch(e){
     toast(e.message||'Unable to generate preview. Please try again.');
@@ -472,7 +452,7 @@ $('skipToLead').onclick=()=>{
   skippedPreview=true;
   $('resultPhotoWrap').hidden=true;
   $('download').hidden=true;
-  showStep(7);
+  showStep(7, true);
 };
 
 /* ---------- Download ---------- */
@@ -560,11 +540,9 @@ async function availability(){
 }
 
 /* ---------- Init ---------- */
-$('logo').src=assets.logo;
 refreshAll();
 showStep(1);
 availability();
-pinNavToVisualViewport();
 
 </script>
 </body></html>

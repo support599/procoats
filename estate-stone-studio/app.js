@@ -18,7 +18,7 @@ let step=1;
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',4200)}
 
 /* ---------- Step navigation ---------- */
-function showStep(n){
+function showStep(n, scroll){
   step=n;
   document.querySelectorAll('.step-screen').forEach(el=>{
     el.hidden = Number(el.dataset.step) !== n;
@@ -37,13 +37,16 @@ function showStep(n){
 
   // Scroll to the top of the studio section itself, not the top of the page —
   // this is embedded mid-page, with the real site header/content above it.
-  document.querySelector('.stepper').scrollIntoView({block:'start',behavior:'instant' in document.documentElement.style ? 'instant' : 'auto'});
+  // Only do this on an actual step change (Next/Back/Generate), never on initial load.
+  if(scroll){
+    document.querySelector('.stepper').scrollIntoView({block:'start',behavior:'instant' in document.documentElement.style ? 'instant' : 'auto'});
+  }
 }
 
-$('backBtn').onclick=()=>{ if(step>1) showStep(step-1) };
+$('backBtn').onclick=()=>{ if(step>1) showStep(step-1, true) };
 $('nextBtn').onclick=()=>{
   if(step===1 && !photo){ toast('Upload a photo to continue.'); return }
-  if(step<6) showStep(step+1);
+  if(step<6) showStep(step+1, true);
 };
 
 /* ---------- Choice grids ---------- */
@@ -180,7 +183,7 @@ $('generate').onclick=async()=>{
     $('resultImg').src=im.src;
     $('resultPhotoWrap').hidden=false;
     $('download').hidden=false;
-    showStep(7);
+    showStep(7, true);
     toast('Your realistic concept preview is ready.');
   }catch(e){
     toast(e.message||'Unable to generate preview. Please try again.');
@@ -198,7 +201,7 @@ $('skipToLead').onclick=()=>{
   skippedPreview=true;
   $('resultPhotoWrap').hidden=true;
   $('download').hidden=true;
-  showStep(7);
+  showStep(7, true);
 };
 
 /* ---------- Download ---------- */
